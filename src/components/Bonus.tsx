@@ -32,8 +32,8 @@ export default function Bonus() {
                 bottom: 10,
                 left: 12,
                 fontSize: 10,
-                color: '#a1a1aa',
-                background: 'rgba(10,10,12,0.85)',
+                color: '#A1A1AA',
+                background: 'rgba(21, 21, 25, 0.92)',
                 padding: '3px 8px',
                 borderRadius: 4,
                 border: '1px solid var(--border)',
@@ -45,8 +45,8 @@ export default function Bonus() {
 
           <div style={{ padding: '4px 0' }}>
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 14 }}>
-              <span className="chip amber">Peer-Reviewed Paper · AIP Publishing</span>
-              <span className="chip">Vol. 3297 · Article 090030 (2025)</span>
+              <span className="chip red">Peer-Reviewed Paper · AIP Publishing</span>
+              <span className="chip" style={{ background: '#0B0B0D' }}>Vol. 3297 · Article 090030 (2025)</span>
             </div>
 
             <h3
@@ -54,21 +54,21 @@ export default function Bonus() {
                 fontFamily: 'var(--font-display)',
                 fontSize: 'clamp(20px, 2.2vw, 26px)',
                 fontWeight: 700,
-                color: '#f4f4f6',
+                color: '#F4F4F5',
                 lineHeight: 1.35,
               }}
             >
               “{publication.title}”
             </h3>
 
-            <div className="mono" style={{ fontSize: 13, color: '#fda4af', marginTop: 8 }}>
+            <div className="mono" style={{ fontSize: 13, color: '#F4F4F5', marginTop: 8 }}>
               {publication.authors}
             </div>
-            <div style={{ fontSize: 13.5, color: '#71717a', marginTop: 2 }}>
+            <div style={{ fontSize: 13.5, color: '#A1A1AA', marginTop: 2 }}>
               {publication.venue}
             </div>
 
-            <p style={{ fontSize: 15, color: '#a1a1aa', lineHeight: 1.7, margin: '14px 0 22px' }}>
+            <p style={{ fontSize: 15, color: '#A1A1AA', lineHeight: 1.7, margin: '14px 0 22px' }}>
               {publication.summary}
             </p>
 
@@ -90,20 +90,20 @@ export default function Bonus() {
             >
               <div className="lead-top mono">
                 <PixelArt map={LEAD_ICONS[i % LEAD_ICONS.length]} size={2} />
-                <span style={{ color: '#a1a1aa', fontSize: 11 }}>{item.org}</span>
+                <span style={{ color: '#A1A1AA', fontSize: 11 }}>{item.org}</span>
               </div>
               <h4
                 style={{
                   fontFamily: 'var(--font-display)',
                   fontSize: 18,
                   fontWeight: 700,
-                  color: '#f4f4f6',
+                  color: '#F4F4F5',
                   margin: '14px 0 8px',
                 }}
               >
                 {item.title}
               </h4>
-              <p style={{ fontSize: 14.5, color: '#a1a1aa', lineHeight: 1.65 }}>{item.text}</p>
+              <p style={{ fontSize: 14.5, color: '#A1A1AA', lineHeight: 1.65 }}>{item.text}</p>
             </motion.article>
           ))}
         </div>
@@ -121,7 +121,7 @@ export default function Bonus() {
           position: relative;
           height: 240px;
           border-radius: 8px;
-          background: radial-gradient(circle, rgba(225, 29, 72, 0.08) 0%, #0d0d11 75%);
+          background: #0B0B0D;
           border: 1px solid var(--border);
         }
         .lead-grid {

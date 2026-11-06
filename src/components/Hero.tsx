@@ -46,21 +46,6 @@ export default function Hero() {
 
   return (
     <section id="top" className="hero-section">
-      <div
-        aria-hidden
-        style={{
-          position: 'absolute',
-          top: '6%',
-          right: '6%',
-          width: 520,
-          height: 520,
-          borderRadius: '50%',
-          background:
-            'radial-gradient(circle, rgba(225, 29, 72, 0.11) 0%, rgba(245, 158, 11, 0.04) 45%, transparent 70%)',
-          pointerEvents: 'none',
-        }}
-      />
-
       <div className="container hero-grid">
         <div style={{ position: 'relative', zIndex: 2 }}>
           <motion.div
@@ -69,7 +54,7 @@ export default function Hero() {
             transition={{ duration: 0.4 }}
             style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginBottom: 20 }}
           >
-            <span className="chip emerald">
+            <span className="chip" style={{ color: '#F4F4F5' }}>
               <span className="live-dot" />
               <span className="avail-full">{profile.availability}</span>
               <span className="avail-short">Werkstudent / Internship · 20h/wk</span>
@@ -101,14 +86,14 @@ export default function Hero() {
             transition={{ duration: 0.45, delay: 0.18 }}
             style={{
               fontSize: 16.5,
-              color: '#a1a1aa',
+              color: '#A1A1AA',
               maxWidth: 560,
               lineHeight: 1.75,
               marginTop: 16,
             }}
           >
-            M.Sc. student in <strong style={{ color: '#f4f4f6' }}>Data Analytics & Decision Science</strong> at{' '}
-            <strong style={{ color: '#f4f4f6' }}>RWTH Aachen</strong> with 2+ years of industry experience across AI
+            M.Sc. student in <strong style={{ color: '#F4F4F5' }}>Data Analytics & Decision Science</strong> at{' '}
+            <strong style={{ color: '#F4F4F5' }}>RWTH Aachen</strong> with 2+ years of industry experience across AI
             evaluation, automated ETL pipelines, and full-stack analytics, backed by an electrical engineering degree
             and published deep-learning research.
           </motion.p>
@@ -144,11 +129,11 @@ export default function Hero() {
                   width: 7,
                   height: 7,
                   borderRadius: '50%',
-                  background: '#e11d48',
+                  background: '#E11D48',
                   display: 'inline-block',
                 }}
               />
-              <span style={{ color: '#e4e4e7', fontWeight: 500 }}>
+              <span style={{ color: '#F4F4F5', fontWeight: 500 }}>
                 Interactive 3D Model · {activeTab.label}
               </span>
             </div>
@@ -158,8 +143,9 @@ export default function Hero() {
               aria-pressed={wireframe}
               className="tech-btn mono"
               style={{
-                background: wireframe ? 'rgba(245, 158, 11, 0.16)' : 'rgba(255,255,255,0.05)',
-                color: wireframe ? '#fcd34d' : '#a1a1aa',
+                background: wireframe ? 'rgba(225, 29, 72, 0.12)' : '#0B0B0D',
+                borderColor: wireframe ? '#E11D48' : '#27272A',
+                color: wireframe ? '#F4F4F5' : '#A1A1AA',
                 fontSize: 11.5,
               }}
             >
@@ -177,8 +163,8 @@ export default function Hero() {
             </div>
 
             <div className="viewport-readout mono">
-              <div style={{ color: '#f4f4f6', fontWeight: 600 }}>{activeTab.metric}</div>
-              <div style={{ color: '#a1a1aa', fontSize: 10.5, marginTop: 2 }}>{activeTab.sub}</div>
+              <div style={{ color: '#F4F4F5', fontWeight: 600 }}>{activeTab.metric}</div>
+              <div style={{ color: '#A1A1AA', fontSize: 10.5, marginTop: 2 }}>{activeTab.sub}</div>
             </div>
           </div>
 
@@ -225,13 +211,13 @@ export default function Hero() {
           font-weight: 700;
           letter-spacing: -0.035em;
           line-height: 1.05;
-          color: #f4f4f6;
+          color: #F4F4F5;
         }
         .hero-headline {
           font-family: var(--font-display);
           font-size: clamp(18px, 2.1vw, 24px);
           font-weight: 500;
-          color: #d4d4d8;
+          color: #F4F4F5;
           line-height: 1.38;
           margin-top: 12px;
           max-width: 560px;
@@ -251,15 +237,13 @@ export default function Hero() {
           padding: 10px 16px;
           font-size: 11.5px;
           border-bottom: 1px solid var(--border);
-          background: rgba(255, 255, 255, 0.015);
+          background: #151519;
           flex-wrap: wrap;
         }
         .viewport-stage {
           position: relative;
           height: 360px;
-          background:
-            radial-gradient(circle at 50% 50%, rgba(225, 29, 72, 0.08), transparent 70%),
-            #0c0c10;
+          background: #0B0B0D;
         }
         .viewport-seal {
           position: absolute;
@@ -273,8 +257,8 @@ export default function Hero() {
           right: 14px;
           max-width: fit-content;
           bottom: 14px;
-          background: rgba(16, 16, 20, 0.9);
-          border: 1px solid var(--border-bright);
+          background: rgba(21, 21, 25, 0.94);
+          border: 1px solid var(--border);
           border-radius: 6px;
           padding: 8px 12px;
           font-size: 11.5px;
@@ -284,7 +268,7 @@ export default function Hero() {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
           border-top: 1px solid var(--border);
-          background: #101014;
+          background: #151519;
         }
         .viewport-tab {
           display: flex;
@@ -293,7 +277,7 @@ export default function Hero() {
           gap: 8px;
           padding: 12px 8px;
           background: transparent;
-          color: #a1a1aa;
+          color: #A1A1AA;
           border: none;
           border-right: 1px solid var(--border);
           font-size: 11px;
@@ -304,13 +288,13 @@ export default function Hero() {
           border-right: none;
         }
         .viewport-tab:hover {
-          color: #f4f4f6;
-          background: rgba(255, 255, 255, 0.03);
+          color: #F4F4F5;
+          background: rgba(244, 244, 245, 0.03);
         }
         .viewport-tab.active {
-          color: #f4f4f6;
+          color: #F4F4F5;
           background: rgba(225, 29, 72, 0.12);
-          box-shadow: inset 0 -2px 0 #e11d48;
+          box-shadow: inset 0 -2px 0 #E11D48;
           font-weight: 600;
         }
         @media (max-width: 960px) {

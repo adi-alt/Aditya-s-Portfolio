@@ -3,20 +3,20 @@ import { memo, useMemo, type CSSProperties, type ReactElement } from 'react'
 export type Palette = Record<string, string>
 
 export const PALETTE: Palette = {
-  K: '#07090e', // Dark obsidian
-  D: '#182030', // Dark slate metal
-  M: '#2d3a52', // Mid steel
-  S: '#64748b', // Brushed steel
-  L: '#cbd5e1', // Light aluminum
-  W: '#f8fafc', // Pure white
-  C: '#00f0ff', // Telemetry cyan
-  c: '#0891b2', // Deep cyan
-  R: '#ff2a54', // F1 Apex crimson
-  r: '#9f1239', // Dark crimson
-  Y: '#ffb800', // Amber gold pin
-  O: '#b45309', // Copper trace
-  G: '#10b981', // PCB emerald
-  g: '#065f46', // Deep PCB substrate
+  K: '#0B0B0D', // Near-black obsidian
+  D: '#151519', // Charcoal surface
+  M: '#27272A', // Subtle structural grey
+  S: '#52525B', // Brushed steel
+  L: '#A1A1AA', // Muted metallic grey
+  W: '#F4F4F5', // Off-white highlight
+  C: '#06B6D4', // Technical visualisation cyan
+  c: '#0891B2', // Deep technical cyan
+  R: '#E11D48', // Motorsport red
+  r: '#9F1239', // Deep crimson
+  Y: '#A1A1AA', // Metallic silver contact pin
+  O: '#0891B2', // Technical trace routing
+  G: '#27272A', // Matte graphite substrate
+  g: '#151519', // Deep charcoal board
 }
 
 /** Pads rows so hand-typed maps always form a clean rectangle. */

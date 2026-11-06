@@ -37,8 +37,8 @@ export default function Loader({ onDone }: { onDone: () => void }) {
         position: 'fixed',
         inset: 0,
         zIndex: 1000,
-        backgroundColor: '#0a0a0c',
-        color: '#f4f4f6',
+        backgroundColor: '#0B0B0D',
+        color: '#F4F4F5',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -54,14 +54,14 @@ export default function Loader({ onDone }: { onDone: () => void }) {
             alignItems: 'center',
             gap: 12,
             fontSize: 12,
-            color: '#a1a1aa',
+            color: '#A1A1AA',
             marginBottom: 20,
-            borderBottom: '1px solid rgba(255,255,255,0.08)',
+            borderBottom: '1px solid #27272A',
             paddingBottom: 12,
             flexWrap: 'wrap',
           }}
         >
-          <span style={{ display: 'flex', alignItems: 'center', gap: 10, color: '#f4f4f6' }}>
+          <span style={{ display: 'flex', alignItems: 'center', gap: 10, color: '#F4F4F5' }}>
             <PixelArt map={F1_ICON} size={2} />
             <span>Aditya Verma · Portfolio</span>
           </span>
@@ -83,8 +83,8 @@ export default function Loader({ onDone }: { onDone: () => void }) {
               gap: 3,
               padding: 3,
               borderRadius: 6,
-              border: '1px solid rgba(255,255,255,0.12)',
-              background: '#0a0a0c',
+              border: '1px solid #27272A',
+              background: '#0B0B0D',
             }}
           >
             {Array.from({ length: blocks }, (_, i) => (
@@ -93,7 +93,7 @@ export default function Loader({ onDone }: { onDone: () => void }) {
                 style={{
                   height: 8,
                   borderRadius: 2,
-                  background: i < filled ? '#e11d48' : 'rgba(255,255,255,0.04)',
+                  background: i < filled ? '#E11D48' : '#27272A',
                 }}
               />
             ))}
@@ -105,12 +105,12 @@ export default function Loader({ onDone }: { onDone: () => void }) {
               justifyContent: 'space-between',
               gap: 8,
               fontSize: 11,
-              color: '#71717a',
+              color: '#A1A1AA',
               marginTop: 8,
             }}
           >
             <span>Loading 3D models &amp; project visuals…</span>
-            <span style={{ color: '#f4f4f6' }}>{Math.floor(progress)}%</span>
+            <span style={{ color: '#F4F4F5' }}>{Math.floor(progress)}%</span>
           </div>
         </div>
       </div>

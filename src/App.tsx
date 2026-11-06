@@ -16,11 +16,11 @@ export default function App() {
       <main>
         <Hero />
         <About />
-        <TelemetryDivider accent="#e11d48" secondary="#71717a" />
+        <TelemetryDivider accent="#E11D48" secondary="#3F3F46" />
         <Projects />
-        <TelemetryDivider accent="#f59e0b" secondary="#71717a" flip />
+        <TelemetryDivider accent="#E11D48" secondary="#3F3F46" flip />
         <Experience />
-        <TelemetryDivider accent="#10b981" secondary="#71717a" />
+        <TelemetryDivider accent="#E11D48" secondary="#3F3F46" />
         <Skills />
         <Bonus />
         <Contact />

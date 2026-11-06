@@ -47,7 +47,7 @@ function TelemetryBenchmark({ p, isF1 }: { p: Project; isF1: boolean }) {
           flexWrap: 'wrap',
           gap: 8,
           fontSize: 11,
-          color: '#a1a1aa',
+          color: '#A1A1AA',
           marginBottom: 12,
         }}
       >
@@ -58,7 +58,9 @@ function TelemetryBenchmark({ p, isF1 }: { p: Project; isF1: boolean }) {
           onClick={() => setInspectSkeleton((s) => !s)}
           className="tech-btn mono"
           style={{
-            color: showSkeleton ? '#fcd34d' : '#a1a1aa',
+            background: showSkeleton ? 'rgba(225, 29, 72, 0.12)' : '#151519',
+            borderColor: showSkeleton ? '#E11D48' : '#27272A',
+            color: showSkeleton ? '#F4F4F5' : '#A1A1AA',
             fontSize: 11.5,
           }}
         >
@@ -82,14 +84,14 @@ function TelemetryBenchmark({ p, isF1 }: { p: Project; isF1: boolean }) {
             style={{
               width: '100%',
               height: 76,
-              background: '#0d0d11',
+              background: '#0B0B0D',
               borderRadius: 6,
-              border: '1px solid rgba(255,255,255,0.07)',
+              border: '1px solid #27272A',
               display: 'block',
             }}
           >
-            <line x1="0" y1="25" x2="280" y2="25" stroke="rgba(255,255,255,0.04)" strokeWidth="1" />
-            <line x1="0" y1="50" x2="280" y2="50" stroke="rgba(255,255,255,0.04)" strokeWidth="1" />
+            <line x1="0" y1="25" x2="280" y2="25" stroke="#151519" strokeWidth="1" />
+            <line x1="0" y1="50" x2="280" y2="50" stroke="#151519" strokeWidth="1" />
 
             {/* Baseline curve */}
             <path
@@ -99,7 +101,8 @@ function TelemetryBenchmark({ p, isF1 }: { p: Project; isF1: boolean }) {
                   : 'M 10 28 C 65 12, 115 38, 170 18 C 215 10, 245 32, 270 22'
               }
               fill="none"
-              stroke="#71717a"
+              stroke="#A1A1AA"
+              strokeOpacity="0.45"
               strokeWidth="1.5"
               strokeDasharray="4 4"
             />
@@ -112,7 +115,7 @@ function TelemetryBenchmark({ p, isF1 }: { p: Project; isF1: boolean }) {
                   : 'M 10 58 C 65 44, 115 64, 170 48 C 215 42, 245 56, 270 50'
               }
               fill="none"
-              stroke={isF1 ? '#f43f5e' : '#10b981'}
+              stroke={isF1 ? '#E11D48' : '#06B6D4'}
               strokeWidth="2.2"
               initial={{ pathLength: 0 }}
               whileInView={{ pathLength: 1 }}
@@ -123,20 +126,20 @@ function TelemetryBenchmark({ p, isF1 }: { p: Project; isF1: boolean }) {
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 8, marginTop: 12 }}>
             <div>
-              <div className="mono" style={{ fontSize: 10, color: '#71717a' }}>{p.metric.base}</div>
-              <div className="mono" style={{ fontSize: 15, color: '#a1a1aa', fontWeight: 600, marginTop: 2 }}>
+              <div className="mono" style={{ fontSize: 10, color: '#A1A1AA' }}>{p.metric.base}</div>
+              <div className="mono" style={{ fontSize: 15, color: '#A1A1AA', fontWeight: 600, marginTop: 2 }}>
                 {p.metric.from}
               </div>
             </div>
             <div>
-              <div className="mono" style={{ fontSize: 10, color: '#71717a' }}>My Model</div>
-              <div className="mono" style={{ fontSize: 15, color: '#f4f4f6', fontWeight: 700, marginTop: 2 }}>
+              <div className="mono" style={{ fontSize: 10, color: '#A1A1AA' }}>My Model</div>
+              <div className="mono" style={{ fontSize: 15, color: '#F4F4F5', fontWeight: 700, marginTop: 2 }}>
                 <AnimatedNumber from={p.metric.from} to={p.metric.to} decimals={p.metric.to < 1 ? 4 : 3} />
               </div>
             </div>
             <div>
-              <div className="mono" style={{ fontSize: 10, color: '#71717a' }}>Error Reduction</div>
-              <div className="mono" style={{ fontSize: 15, color: '#10b981', fontWeight: 700, marginTop: 2 }}>
+              <div className="mono" style={{ fontSize: 10, color: '#A1A1AA' }}>Error Reduction</div>
+              <div className="mono" style={{ fontSize: 15, color: '#E11D48', fontWeight: 700, marginTop: 2 }}>
                 −{improvement}
               </div>
             </div>
@@ -185,9 +188,9 @@ function ProjectShowcase({ p, i }: { p: Project; i: number }) {
           <div className="browser-frame">
             <div className="browser-chrome">
               <div className="browser-dots">
-                <span style={{ background: '#ef4444' }} />
-                <span style={{ background: '#f59e0b' }} />
-                <span style={{ background: '#10b981' }} />
+                <span style={{ background: '#E11D48' }} />
+                <span style={{ background: '#27272A' }} />
+                <span style={{ background: '#27272A' }} />
               </div>
               <div className="browser-url mono">
                 {isF1 ? 'https://www.apexf1hub.com' : 'github.com/adi-alt/Short-Term-Wind-Power-Forecasting'}
@@ -212,8 +215,8 @@ function ProjectShowcase({ p, i }: { p: Project; i: number }) {
                   transition={{ duration: 0.25 }}
                   className="project-photo"
                   style={{
-                    background: activeImg.src.includes('wind-') && !activeImg.src.includes('repo') ? '#ffffff' : '#0a0a0c',
-                    objectFit: activeImg.src.includes('wind-rose') ? 'contain' : 'cover',
+                    background: '#0B0B0D',
+                    objectFit: activeImg.src.includes('wind-') && !activeImg.src.includes('repo') ? 'contain' : 'cover',
                   }}
                 />
               </AnimatePresence>
@@ -235,7 +238,7 @@ function ProjectShowcase({ p, i }: { p: Project; i: number }) {
                 </button>
               ))}
             </div>
-            <p style={{ fontSize: 13, color: '#71717a', marginTop: 8 }}>{activeImg.caption}</p>
+            <p style={{ fontSize: 13, color: '#A1A1AA', marginTop: 8 }}>{activeImg.caption}</p>
           </div>
 
           <TelemetryBenchmark p={p} isF1={isF1} />
@@ -243,20 +246,20 @@ function ProjectShowcase({ p, i }: { p: Project; i: number }) {
 
         {/* Right: First-Person Engineering Story & Deep-Dive Decisions */}
         <div className="project-narrative">
-          <div className="mono" style={{ fontSize: 11, color: '#f43f5e', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>
+          <div className="mono" style={{ fontSize: 11, color: '#E11D48', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>
             Why & How I Built It
           </div>
-          <p style={{ fontSize: 16.5, color: '#e4e4e7', lineHeight: 1.7, marginBottom: 24 }}>
+          <p style={{ fontSize: 16.5, color: '#F4F4F5', lineHeight: 1.7, marginBottom: 24 }}>
             {p.story}
           </p>
 
           <div style={{ display: 'grid', gap: 16 }}>
             {p.engineeringHighlights.map((h) => (
               <div key={h.title} className="highlight-item">
-                <div style={{ fontSize: 15, fontWeight: 600, color: '#f4f4f6', marginBottom: 4 }}>
+                <div style={{ fontSize: 15, fontWeight: 600, color: '#F4F4F5', marginBottom: 4 }}>
                   {h.title}
                 </div>
-                <p style={{ fontSize: 14, color: '#a1a1aa', lineHeight: 1.65 }}>
+                <p style={{ fontSize: 14, color: '#A1A1AA', lineHeight: 1.65 }}>
                   {h.detail}
                 </p>
               </div>
@@ -305,14 +308,14 @@ export default function Projects() {
           gap: 16px;
           padding: 22px 28px;
           border-bottom: 1px solid var(--border);
-          background: rgba(255, 255, 255, 0.015);
+          background: #151519;
           flex-wrap: wrap;
         }
         .project-name {
           font-family: var(--font-display);
           font-size: clamp(22px, 2.4vw, 28px);
           font-weight: 700;
-          color: #f4f4f6;
+          color: #F4F4F5;
           letter-spacing: -0.02em;
         }
         .project-main-grid {
@@ -324,17 +327,17 @@ export default function Projects() {
         }
         .browser-frame {
           border-radius: 8px;
-          border: 1px solid var(--border-bright);
+          border: 1px solid var(--border);
           overflow: hidden;
-          background: #0a0a0c;
-          box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5);
+          background: #0B0B0D;
+          box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
         }
         .browser-chrome {
           display: flex;
           align-items: center;
           gap: 12px;
           padding: 9px 14px;
-          background: #141419;
+          background: #151519;
           border-bottom: 1px solid var(--border);
         }
         .browser-dots {
@@ -346,14 +349,14 @@ export default function Projects() {
           height: 9px;
           border-radius: 50%;
           display: inline-block;
-          opacity: 0.8;
         }
         .browser-url {
           flex: 1;
           min-width: 0;
           font-size: 11px;
-          color: #71717a;
-          background: rgba(0, 0, 0, 0.35);
+          color: #A1A1AA;
+          background: #0B0B0D;
+          border: 1px solid #27272A;
           padding: 3px 10px;
           border-radius: 4px;
           overflow: hidden;
@@ -365,7 +368,7 @@ export default function Projects() {
           aspect-ratio: 16 / 10;
           width: 100%;
           overflow: hidden;
-          background: #0d0d11;
+          background: #0B0B0D;
         }
         .project-photo {
           width: 100%;
@@ -382,9 +385,9 @@ export default function Projects() {
           justify-content: center;
           height: var(--ctrl-h);
           min-height: var(--ctrl-h);
-          background: rgba(255, 255, 255, 0.04);
+          background: #0B0B0D;
           border: 1px solid var(--border);
-          color: #a1a1aa;
+          color: #A1A1AA;
           padding: 0 14px;
           border-radius: var(--ctrl-r);
           font-size: 11.5px;
@@ -392,26 +395,26 @@ export default function Projects() {
           transition: all 0.15s ease;
         }
         .gallery-tab:hover {
-          color: #f4f4f6;
+          color: #F4F4F5;
           border-color: var(--border-bright);
         }
         .gallery-tab.active {
-          background: rgba(225, 29, 72, 0.14);
-          border-color: rgba(244, 63, 94, 0.5);
-          color: #fda4af;
+          background: rgba(225, 29, 72, 0.12);
+          border-color: #E11D48;
+          color: #F4F4F5;
           font-weight: 600;
         }
         .benchmark-panel {
-          background: #101014;
+          background: #0B0B0D;
           border: 1px solid var(--border);
           border-radius: 8px;
           padding: 16px;
         }
         .highlight-item {
           padding: 14px 16px;
-          background: rgba(255, 255, 255, 0.02);
+          background: #0B0B0D;
           border: 1px solid var(--border);
-          border-left: 3px solid var(--accent-bright);
+          border-left: 3px solid var(--accent);
           border-radius: 6px;
         }
         .stack-pill {
@@ -423,9 +426,9 @@ export default function Projects() {
           font-size: 11.5px;
           padding: 0 14px;
           border-radius: var(--ctrl-r);
-          background: rgba(255, 255, 255, 0.04);
-          border: 1px solid var(--border-bright);
-          color: #d4d4d8;
+          background: #0B0B0D;
+          border: 1px solid var(--border);
+          color: #A1A1AA;
         }
         @media (max-width: 1020px) {
           .project-main-grid {

@@ -1,5 +1,5 @@
 import { motion, useMotionValueEvent, useScroll, useSpring } from 'framer-motion'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useGame } from './Game'
 import { F1_ICON, PixelArt } from './Sprites'
 
@@ -17,8 +17,29 @@ export default function HUD() {
   const { scrollY, scrollYProgress } = useScroll()
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 24 })
   const [solid, setSolid] = useState(false)
+  const [activeId, setActiveId] = useState<string>('')
 
   useMotionValueEvent(scrollY, 'change', (y) => setSolid(y > 24))
+
+  useEffect(() => {
+    if (typeof IntersectionObserver === 'undefined') return
+    const sections = NAV.map((n) => document.getElementById(n.id)).filter(Boolean) as HTMLElement[]
+    if (!sections.length) return
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)
+        if (visible[0]?.target.id) {
+          setActiveId(visible[0].target.id)
+        }
+      },
+      { rootMargin: '-25% 0px -55% 0px', threshold: [0, 0.2, 0.5] }
+    )
+    sections.forEach((s) => obs.observe(s))
+    return () => obs.disconnect()
+  }, [])
 
   return (
     <motion.header
@@ -31,30 +52,37 @@ export default function HUD() {
         left: 0,
         right: 0,
         zIndex: 100,
-        background: solid ? 'rgba(10, 10, 12, 0.92)' : 'rgba(10, 10, 12, 0.72)',
+        background: solid ? 'rgba(11, 11, 13, 0.94)' : 'rgba(11, 11, 13, 0.8)',
         backdropFilter: 'blur(14px)',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.07)',
       }}
     >
       <div className="container hud-bar">
         <a href="#top" className="hud-brand">
           <PixelArt map={F1_ICON} size={2} />
           <div>
-            <div style={{ fontWeight: 600, fontSize: 14, color: '#f4f4f6', letterSpacing: '-0.01em' }}>
+            <div style={{ fontWeight: 600, fontSize: 14, color: 'var(--ink)', letterSpacing: '-0.01em' }}>
               Aditya Verma
             </div>
-            <div className="mono hud-sub" style={{ fontSize: 10.5, color: '#71717a' }}>
+            <div className="mono hud-sub" style={{ fontSize: 10.5, color: 'var(--ink-dim)' }}>
               Aachen, DE · RWTH M.Sc.
             </div>
           </div>
         </a>
 
         <nav className="hud-nav" aria-label="Primary section navigation">
-          {NAV.map((n) => (
-            <a key={n.id} href={`#${n.id}`} className="hud-link">
-              {n.label}
-            </a>
-          ))}
+          {NAV.map((n) => {
+            const isActive = activeId === n.id
+            return (
+              <a
+                key={n.id}
+                href={`#${n.id}`}
+                className={`hud-link ${isActive ? 'active' : ''}`}
+                aria-current={isActive ? 'location' : undefined}
+              >
+                {n.label}
+              </a>
+            )
+          })}
         </nav>
 
         <div className="hud-actions">
@@ -77,14 +105,16 @@ export default function HUD() {
         </div>
       </div>
 
-      <motion.div
-        style={{
-          scaleX: progress,
-          transformOrigin: '0 50%',
-          height: 2,
-          background: 'linear-gradient(90deg, #e11d48, #f59e0b, #10b981)',
-        }}
-      />
+      <div style={{ position: 'relative', height: 1, background: 'var(--border)' }}>
+        <motion.div
+          style={{
+            scaleX: progress,
+            transformOrigin: '0 50%',
+            height: 1,
+            background: 'rgba(225, 29, 72, 0.65)',
+          }}
+        />
+      </div>
 
       <style>{`
         .hud-bar {
@@ -112,19 +142,25 @@ export default function HUD() {
           display: none;
         }
         .hud-link {
+          position: relative;
           display: inline-flex;
           align-items: center;
           height: var(--ctrl-h);
           font-size: 13px;
-          color: #a1a1aa;
+          color: var(--ink-muted);
           padding: 0 11px;
           border-radius: var(--ctrl-r);
           white-space: nowrap;
           transition: color 0.15s ease, background 0.15s ease;
         }
         .hud-link:hover {
-          color: #f4f4f6;
-          background: rgba(255, 255, 255, 0.05);
+          color: var(--ink);
+          background: var(--bg-card);
+        }
+        .hud-link.active {
+          color: var(--ink);
+          background: var(--bg-card);
+          box-shadow: inset 0 -2px 0 var(--accent);
         }
         .hud-actions {
           display: flex;
@@ -138,9 +174,9 @@ export default function HUD() {
           justify-content: center;
           height: var(--ctrl-h);
           min-height: var(--ctrl-h);
-          background: rgba(255, 255, 255, 0.04);
-          color: #a1a1aa;
-          border: 1px solid var(--border-bright);
+          background: var(--bg-card);
+          color: var(--ink-muted);
+          border: 1px solid var(--border);
           border-radius: var(--ctrl-r);
           padding: 0 12px;
           font-size: 11.5px;
@@ -149,12 +185,13 @@ export default function HUD() {
           transition: all 0.15s ease;
         }
         .wire-toggle:hover {
-          color: #f4f4f6;
+          color: var(--ink);
+          border-color: var(--border-bright);
         }
         .wire-toggle.is-on {
-          background: rgba(245, 158, 11, 0.15);
-          border-color: #f59e0b;
-          color: #fcd34d;
+          background: var(--accent-dim);
+          border-color: var(--accent);
+          color: var(--ink);
         }
         .wire-label-short {
           display: none;
@@ -168,7 +205,7 @@ export default function HUD() {
             order: 3;
             width: 100%;
             padding-top: 6px;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            border-top: 1px solid var(--border);
           }
           .hud-link {
             height: 32px;

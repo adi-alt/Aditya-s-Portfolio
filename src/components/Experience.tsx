@@ -20,7 +20,7 @@ function ExperienceRow({ job, last }: { job: Job; last: boolean }) {
               <path
                 d={d}
                 fill="none"
-                stroke="rgba(255,255,255,0.08)"
+                stroke="#27272A"
                 strokeWidth="2"
                 strokeDasharray="4 6"
                 vectorEffect="non-scaling-stroke"
@@ -28,7 +28,7 @@ function ExperienceRow({ job, last }: { job: Job; last: boolean }) {
               <motion.path
                 d={d}
                 fill="none"
-                stroke="#e11d48"
+                stroke="#E11D48"
                 strokeWidth="2.5"
                 vectorEffect="non-scaling-stroke"
                 style={{ pathLength: draw }}
@@ -42,7 +42,7 @@ function ExperienceRow({ job, last }: { job: Job; last: boolean }) {
         </div>
 
         <div className="exp-meta-text">
-          <div className="mono" style={{ fontSize: 12, color: '#fda4af', fontWeight: 600 }}>
+          <div className="mono" style={{ fontSize: 12, color: '#E11D48', fontWeight: 600 }}>
             {job.period}
           </div>
           <h3
@@ -50,14 +50,14 @@ function ExperienceRow({ job, last }: { job: Job; last: boolean }) {
               fontFamily: 'var(--font-display)',
               fontSize: 22,
               fontWeight: 700,
-              color: '#f4f4f6',
+              color: '#F4F4F5',
               marginTop: 4,
             }}
           >
             {job.company}
           </h3>
-          <div style={{ fontSize: 14, color: '#d4d4d8', marginTop: 2 }}>{job.role}</div>
-          <div className="mono" style={{ fontSize: 11.5, color: '#71717a', marginTop: 6 }}>
+          <div style={{ fontSize: 14, color: '#F4F4F5', marginTop: 2 }}>{job.role}</div>
+          <div className="mono" style={{ fontSize: 11.5, color: '#A1A1AA', marginTop: 6 }}>
             {job.place}
           </div>
         </div>
@@ -71,7 +71,7 @@ function ExperienceRow({ job, last }: { job: Job; last: boolean }) {
         viewport={{ once: true, margin: '-10% 0px' }}
         transition={{ type: 'spring', stiffness: 150, damping: 22 }}
       >
-        <p style={{ fontSize: 15.5, color: '#e4e4e7', lineHeight: 1.68, marginBottom: 18 }}>
+        <p style={{ fontSize: 15.5, color: '#F4F4F5', lineHeight: 1.68, marginBottom: 18 }}>
           {job.context}
         </p>
 
@@ -84,7 +84,7 @@ function ExperienceRow({ job, last }: { job: Job; last: boolean }) {
                 gridTemplateColumns: '14px 1fr',
                 gap: 10,
                 fontSize: 14.5,
-                color: '#a1a1aa',
+                color: '#A1A1AA',
                 lineHeight: 1.65,
               }}
             >
@@ -93,7 +93,7 @@ function ExperienceRow({ job, last }: { job: Job; last: boolean }) {
                   width: 5,
                   height: 5,
                   borderRadius: '50%',
-                  background: '#e11d48',
+                  background: '#E11D48',
                   marginTop: 9,
                 }}
               />
@@ -113,7 +113,7 @@ function ExperienceRow({ job, last }: { job: Job; last: boolean }) {
           }}
         >
           {job.tags.map((t) => (
-            <span key={t} className="chip">
+            <span key={t} className="chip" style={{ background: '#0B0B0D' }}>
               {t}
             </span>
           ))}
@@ -183,10 +183,10 @@ export default function Experience() {
           justify-content: center;
           gap: 3px;
           font-size: 10px;
-          color: #f4f4f6;
-          background: #141419;
-          border: 1px solid var(--border-bright);
-          box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
+          color: #F4F4F5;
+          background: #151519;
+          border: 1px solid var(--border);
+          box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
         }
         .exp-meta-text {
           padding-top: 2px;

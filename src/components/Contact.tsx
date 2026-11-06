@@ -41,43 +41,43 @@ function CircuitTelemetryMap() {
   return (
     <div className="tech-card circuit-box">
       <div className="circuit-head mono">
-        <span style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#e4e4e7' }}>
+        <span style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#F4F4F5' }}>
           <PixelArt map={F1_ICON} size={2} />
           <span>Live Circuit Telemetry · Apex F1 Hub</span>
         </span>
-        <span style={{ color: '#10b981' }}>● 15-min ETL Sync</span>
+        <span style={{ color: '#06B6D4' }}>● 15-min ETL Sync</span>
       </div>
 
       <div style={{ padding: '22px 24px 24px', position: 'relative', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', flex: 1 }}>
         <div>
-          <div style={{ fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 700, color: '#f4f4f6' }}>
+          <div style={{ fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 700, color: '#F4F4F5' }}>
             Real-Time Race Telemetry & Forecasting Pipeline
           </div>
-          <p style={{ fontSize: 14, color: '#a1a1aa', marginTop: 4, marginBottom: 14, lineHeight: 1.6 }}>
+          <p style={{ fontSize: 14, color: '#A1A1AA', marginTop: 4, marginBottom: 14, lineHeight: 1.6 }}>
             Automated Python and GitHub Actions workers ingest Jolpica, OpenF1, and FastF1 telemetry every 15 minutes into Supabase PostgreSQL.
           </p>
         </div>
 
         <svg viewBox="0 0 510 230" style={{ width: '100%', height: 'auto', display: 'block' }}>
-          <line x1="170" y1="0" x2="170" y2="230" stroke="rgba(255,255,255,0.05)" strokeDasharray="3 3" />
-          <line x1="340" y1="0" x2="340" y2="230" stroke="rgba(255,255,255,0.05)" strokeDasharray="3 3" />
-          <text x="20" y="20" fill="#71717a" fontFamily="'JetBrains Mono', monospace" fontSize="9">
+          <line x1="170" y1="0" x2="170" y2="230" stroke="#27272A" strokeDasharray="3 3" />
+          <line x1="340" y1="0" x2="340" y2="230" stroke="#27272A" strokeDasharray="3 3" />
+          <text x="20" y="20" fill="#A1A1AA" fontFamily="'JetBrains Mono', monospace" fontSize="9">
             Sector 1 · Data Ingest
           </text>
-          <text x="185" y="20" fill="#71717a" fontFamily="'JetBrains Mono', monospace" fontSize="9">
+          <text x="185" y="20" fill="#A1A1AA" fontFamily="'JetBrains Mono', monospace" fontSize="9">
             Sector 2 · Feature Eng
           </text>
-          <text x="355" y="20" fill="#71717a" fontFamily="'JetBrains Mono', monospace" fontSize="9">
+          <text x="355" y="20" fill="#A1A1AA" fontFamily="'JetBrains Mono', monospace" fontSize="9">
             Sector 3 · Monte Carlo
           </text>
 
-          <path d={trackPath} fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="14" strokeLinejoin="round" />
-          <path d={trackPath} fill="none" stroke="rgba(255, 255, 255, 0.18)" strokeWidth="2" />
+          <path d={trackPath} fill="none" stroke="rgba(39, 39, 42, 0.7)" strokeWidth="14" strokeLinejoin="round" />
+          <path d={trackPath} fill="none" stroke="#3F3F46" strokeWidth="2" />
 
           <motion.path
             d={trackPath}
             fill="none"
-            stroke="#e11d48"
+            stroke="#E11D48"
             strokeWidth="3"
             initial={{ pathLength: 0.22, pathOffset: 0 }}
             animate={{ pathOffset: [0, 1] }}
@@ -85,12 +85,12 @@ function CircuitTelemetryMap() {
           />
 
           {[
-            { x: 115, y: 55, label: 'Elo + RF', color: '#f4f4f6' },
-            { x: 260, y: 80, label: 'MAE 2.872', color: '#f59e0b' },
-            { x: 410, y: 195, label: 'Groq 1.7s', color: '#10b981' },
+            { x: 115, y: 55, label: 'Elo + RF', color: '#F4F4F5' },
+            { x: 260, y: 80, label: 'MAE 2.872', color: '#E11D48' },
+            { x: 410, y: 195, label: 'Groq 1.7s', color: '#06B6D4' },
           ].map((pt) => (
             <g key={pt.label}>
-              <rect x={pt.x - 4} y={pt.y - 4} width="8" height="8" fill={pt.color} stroke="#0a0a0c" strokeWidth="1.5" />
+              <rect x={pt.x - 4} y={pt.y - 4} width="8" height="8" fill={pt.color} stroke="#0B0B0D" strokeWidth="1.5" />
               <text
                 x={pt.x + 10}
                 y={pt.y + 3}
@@ -108,15 +108,15 @@ function CircuitTelemetryMap() {
         <div className="circuit-metrics mono">
           <div className="circuit-stat-item">
             <span className="circuit-stat-label">Summary Latency</span>
-            <span style={{ color: '#f4f4f6', fontWeight: 600 }}>1.7 s median</span>
+            <span style={{ color: '#F4F4F5', fontWeight: 600 }}>1.7 s median</span>
           </div>
           <div className="circuit-stat-item">
             <span className="circuit-stat-label">Automated Tests</span>
-            <span style={{ color: '#10b981', fontWeight: 600 }}>156 test files</span>
+            <span style={{ color: '#06B6D4', fontWeight: 600 }}>156 test files</span>
           </div>
           <div className="circuit-stat-item">
             <span className="circuit-stat-label">Spearman Rank</span>
-            <span style={{ color: '#f59e0b', fontWeight: 600 }}>0.762</span>
+            <span style={{ color: '#E11D48', fontWeight: 600 }}>0.762</span>
           </div>
         </div>
       </div>
@@ -135,10 +135,10 @@ export default function Contact() {
         <div className="contact-grid">
           <div className="tech-card contact-directory">
             <div className="contact-tags-row">
-              <span className="chip emerald contact-tag">
+              <span className="chip contact-tag" style={{ background: '#0B0B0D', color: '#F4F4F5' }}>
                 <span className="live-dot" /> Available up to 20h/week
               </span>
-              <span className="chip contact-tag">Aachen & Remote</span>
+              <span className="chip contact-tag" style={{ background: '#0B0B0D' }}>Aachen & Remote</span>
             </div>
 
             <h3
@@ -146,14 +146,14 @@ export default function Contact() {
                 fontFamily: 'var(--font-display)',
                 fontSize: 'clamp(22px, 2.3vw, 28px)',
                 fontWeight: 700,
-                color: '#f4f4f6',
+                color: '#F4F4F5',
                 lineHeight: 1.3,
               }}
             >
               Open for Werkstudent and internship roles in Data Analytics, BI, and AI Engineering.
             </h3>
 
-            <p style={{ fontSize: 15, color: '#a1a1aa', marginTop: 10, lineHeight: 1.65 }}>
+            <p style={{ fontSize: 15, color: '#A1A1AA', marginTop: 10, lineHeight: 1.65 }}>
               Reach out directly by email, LinkedIn, or phone. I usually reply within a few hours.
             </p>
 
@@ -167,10 +167,10 @@ export default function Contact() {
                   className="channel-row"
                 >
                   <div style={{ minWidth: 0 }}>
-                    <div className="mono" style={{ fontSize: 11, color: '#71717a' }}>
+                    <div className="mono" style={{ fontSize: 11, color: '#A1A1AA' }}>
                       {c.label}
                     </div>
-                    <div style={{ fontSize: 15.5, fontWeight: 600, color: '#f4f4f6', marginTop: 2, overflowWrap: 'anywhere' }}>
+                    <div style={{ fontSize: 15.5, fontWeight: 600, color: '#F4F4F5', marginTop: 2, overflowWrap: 'anywhere' }}>
                       {c.value}
                     </div>
                   </div>
@@ -233,13 +233,12 @@ export default function Contact() {
           gap: 16px;
           padding: 12px 16px;
           border-radius: 8px;
-          background: rgba(255, 255, 255, 0.025);
+          background: #0B0B0D;
           border: 1px solid var(--border);
           transition: border-color 0.16s ease, background 0.16s ease;
           flex-wrap: wrap;
         }
         .channel-row:hover {
-          background: rgba(255, 255, 255, 0.045);
           border-color: var(--border-bright);
         }
         .circuit-box {
@@ -255,7 +254,7 @@ export default function Contact() {
           padding: 14px 22px;
           font-size: 11px;
           border-bottom: 1px solid var(--border);
-          background: rgba(255, 255, 255, 0.015);
+          background: #151519;
         }
         .circuit-metrics {
           display: grid;
@@ -272,17 +271,17 @@ export default function Contact() {
           gap: 4px;
           padding: 10px 12px;
           border-radius: 6px;
-          background: rgba(255, 255, 255, 0.025);
+          background: #0B0B0D;
           border: 1px solid var(--border);
         }
         .circuit-stat-label {
           font-size: 10.5px;
-          color: #71717a;
+          color: #A1A1AA;
         }
         .footer {
           border-top: 1px solid var(--border);
-          background: #08080a;
-          color: #71717a;
+          background: #0B0B0D;
+          color: #A1A1AA;
           font-size: 11.5px;
           padding: 22px 0;
         }

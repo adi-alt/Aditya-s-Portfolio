@@ -44,7 +44,7 @@ function DomainTopology() {
             })
             .join(' ')}
           fill="none"
-          stroke="rgba(255,255,255,0.08)"
+          stroke="#27272A"
           strokeWidth="1"
           strokeDasharray={idx < 2 ? '3 3' : undefined}
         />
@@ -52,14 +52,14 @@ function DomainTopology() {
 
       {/* Axis spokes */}
       {nodes.map((p, i) => (
-        <line key={i} x1={cx} y1={cy} x2={p.x} y2={p.y} stroke="rgba(255,255,255,0.08)" strokeWidth="1" />
+        <line key={i} x1={cx} y1={cy} x2={p.x} y2={p.y} stroke="#27272A" strokeWidth="1" />
       ))}
 
       {/* Connected 5-domain topology */}
       <motion.polygon
         points={outerPoly}
-        fill="rgba(225, 29, 72, 0.14)"
-        stroke="#f43f5e"
+        fill="rgba(225, 29, 72, 0.12)"
+        stroke="#E11D48"
         strokeWidth="1.8"
         initial={{ opacity: 0, scale: 0.5 }}
         whileInView={{ opacity: 1, scale: 1 }}
@@ -68,21 +68,21 @@ function DomainTopology() {
         style={{ transformOrigin: `${cx}px ${cy}px` }}
       />
 
-      <polygon points={innerPoly} fill="rgba(245, 158, 11, 0.08)" stroke="rgba(245, 158, 11, 0.45)" strokeWidth="1" />
+      <polygon points={innerPoly} fill="rgba(6, 182, 212, 0.08)" stroke="rgba(6, 182, 212, 0.5)" strokeWidth="1" />
 
       {/* Center hub node */}
-      <rect x={cx - 4} y={cy - 4} width="8" height="8" fill="#e11d48" />
+      <rect x={cx - 4} y={cy - 4} width="8" height="8" fill="#E11D48" />
 
       {/* Domain nodes & labels */}
       {nodes.map((p) => (
         <g key={p.label}>
-          <rect x={p.x - 3.5} y={p.y - 3.5} width="7" height="7" fill="#f4f4f6" stroke="#e11d48" strokeWidth="1.5" />
+          <rect x={p.x - 3.5} y={p.y - 3.5} width="7" height="7" fill="#F4F4F5" stroke="#E11D48" strokeWidth="1.5" />
           <text
             x={p.lx}
             y={p.ly}
             textAnchor="middle"
             dominantBaseline="middle"
-            fill="#d4d4d8"
+            fill="#F4F4F5"
             fontFamily="'JetBrains Mono', monospace"
             fontSize="8.5"
             fontWeight="600"
@@ -114,13 +114,13 @@ export default function About() {
               viewport={{ once: true }}
               transition={{ type: 'spring', stiffness: 200, damping: 20, delay: i * 0.05 }}
             >
-              <div className="mono" style={{ fontSize: 26, fontWeight: 700, color: '#f4f4f6', letterSpacing: '-0.02em' }}>
+              <div className="mono" style={{ fontSize: 26, fontWeight: 700, color: '#F4F4F5', letterSpacing: '-0.02em' }}>
                 {c.value}
               </div>
-              <div style={{ fontSize: 13.5, fontWeight: 600, color: '#e4e4e7', marginTop: 4 }}>
+              <div style={{ fontSize: 13.5, fontWeight: 600, color: '#F4F4F5', marginTop: 4 }}>
                 {c.label}
               </div>
-              <div style={{ fontSize: 12, color: '#71717a', marginTop: 2 }}>{c.detail}</div>
+              <div style={{ fontSize: 12, color: '#A1A1AA', marginTop: 2 }}>{c.detail}</div>
             </motion.div>
           ))}
         </div>
@@ -132,7 +132,7 @@ export default function About() {
               className="mono"
               style={{
                 fontSize: 11,
-                color: '#a1a1aa',
+                color: '#A1A1AA',
                 marginBottom: 6,
                 display: 'flex',
                 justifyContent: 'space-between',
@@ -140,7 +140,7 @@ export default function About() {
               }}
             >
               <span>Core Focus Areas</span>
-              <span style={{ color: '#71717a' }}>5-Domain Scope</span>
+              <span style={{ color: '#A1A1AA' }}>5-Domain Scope</span>
             </div>
 
             <DomainTopology />
@@ -162,10 +162,10 @@ export default function About() {
           {/* Right Column: Narrative Story & Education */}
           <div style={{ display: 'grid', gap: 24, alignContent: 'start' }}>
             <Reveal delay={0.06} className="tech-card story-card">
-              <p style={{ fontSize: 17.5, color: '#f4f4f6', fontWeight: 500, lineHeight: 1.7 }}>
+              <p style={{ fontSize: 17.5, color: '#F4F4F5', fontWeight: 500, lineHeight: 1.7 }}>
                 {profile.storyLead}
               </p>
-              <p style={{ fontSize: 16, color: '#a1a1aa', lineHeight: 1.75, marginTop: 14 }}>
+              <p style={{ fontSize: 16, color: '#A1A1AA', lineHeight: 1.75, marginTop: 14 }}>
                 {profile.storyBody}
               </p>
             </Reveal>
@@ -185,19 +185,19 @@ export default function About() {
                         fontFamily: 'var(--font-display)',
                         fontSize: 19,
                         fontWeight: 700,
-                        color: '#f4f4f6',
+                        color: '#F4F4F5',
                       }}
                     >
                       {e.school} ↗
                     </a>
-                    <div style={{ fontSize: 15, color: '#fda4af', fontWeight: 500, marginTop: 2 }}>
+                    <div style={{ fontSize: 15, color: '#F4F4F5', fontWeight: 500, marginTop: 2 }}>
                       {e.degree}
                     </div>
-                    <div style={{ fontSize: 13.5, color: '#a1a1aa', marginTop: 6 }}>{e.note}</div>
+                    <div style={{ fontSize: 13.5, color: '#A1A1AA', marginTop: 6 }}>{e.note}</div>
                   </div>
                   <div className="mono edu-meta">
-                    <div style={{ color: '#e4e4e7', fontWeight: 600 }}>{e.period}</div>
-                    <div style={{ color: '#71717a', marginTop: 3 }}>{e.place}</div>
+                    <div style={{ color: '#E11D48', fontWeight: 600 }}>{e.period}</div>
+                    <div style={{ color: '#A1A1AA', marginTop: 3 }}>{e.place}</div>
                   </div>
                 </Reveal>
               ))}
@@ -227,7 +227,7 @@ export default function About() {
         .focus-pillar-item {
           padding: 8px 11px;
           border-radius: 6px;
-          background: rgba(255, 255, 255, 0.025);
+          background: #0B0B0D;
           border: 1px solid var(--border);
         }
         .focus-pillar-head {
@@ -239,23 +239,23 @@ export default function About() {
           width: 6px;
           height: 6px;
           border-radius: 50%;
-          background: var(--accent-bright);
+          background: var(--accent);
           flex-shrink: 0;
         }
         .focus-pillar-title {
           font-size: 13.5px;
           font-weight: 600;
-          color: #f4f4f6;
+          color: #F4F4F5;
         }
         .focus-pillar-methods {
           font-size: 11px;
-          color: #d4d4d8;
+          color: #A1A1AA;
           margin-top: 3px;
           line-height: 1.45;
         }
         .focus-pillar-evidence {
           font-size: 11.5px;
-          color: #71717a;
+          color: #A1A1AA;
           margin-top: 2px;
         }
         .counter-grid {
@@ -279,7 +279,7 @@ export default function About() {
           justify-content: center;
           padding: 10px;
           border-radius: 8px;
-          background: rgba(255, 255, 255, 0.04);
+          background: #0B0B0D;
           border: 1px solid var(--border);
         }
         .edu-meta {

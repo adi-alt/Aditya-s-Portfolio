@@ -5,8 +5,8 @@ import { useRef } from 'react'
  * Subtle telemetry spline divider with scroll-linked phase shift.
  */
 export function TelemetryDivider({
-  accent = '#e11d48',
-  secondary = '#71717a',
+  accent = '#E11D48',
+  secondary = '#27272A',
   flip = false,
 }: {
   accent?: string
@@ -26,9 +26,9 @@ export function TelemetryDivider({
         height: 84,
         overflow: 'hidden',
         transform: flip ? 'scaleY(-1)' : undefined,
-        borderTop: '1px solid rgba(255, 255, 255, 0.05)',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
-        background: '#0d0d11',
+        borderTop: '1px solid #27272A',
+        borderBottom: '1px solid #27272A',
+        background: '#0B0B0D',
       }}
       aria-hidden
     >
@@ -59,13 +59,14 @@ export function TelemetryDivider({
         viewBox="0 0 1200 84"
         preserveAspectRatio="none"
       >
+        <line x1="0" y1="42" x2="1200" y2="42" stroke="#27272A" strokeWidth="1" strokeDasharray="2 6" />
         <path
           d="M0 54 C 190 74, 340 16, 510 48 C 680 78, 830 18, 1000 50 C 1100 68, 1150 30, 1200 44"
           fill="none"
           stroke={secondary}
           strokeWidth="1.2"
           strokeDasharray="5 5"
-          strokeOpacity="0.35"
+          strokeOpacity="0.6"
         />
       </motion.svg>
     </div>
@@ -91,14 +92,14 @@ export function CurvedBadge({
       <defs>
         <path id="eng-ring" d="M100,100 m-74,0 a74,74 0 1,1 148,0 a74,74 0 1,1 -148,0" />
       </defs>
-      <circle cx="100" cy="100" r="94" fill="rgba(16, 16, 20, 0.88)" stroke="rgba(255,255,255,0.14)" strokeWidth="1.5" />
-      <circle cx="100" cy="100" r="52" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="1" strokeDasharray="4 4" />
-      <rect x="95" y="95" width="10" height="10" fill="#e11d48" />
+      <circle cx="100" cy="100" r="94" fill="rgba(21, 21, 25, 0.92)" stroke="#27272A" strokeWidth="1.5" />
+      <circle cx="100" cy="100" r="52" fill="none" stroke="#27272A" strokeWidth="1" strokeDasharray="4 4" />
+      <rect x="95" y="95" width="10" height="10" fill="#E11D48" />
       <text
         fontFamily="'JetBrains Mono', monospace"
         fontSize="11"
         fontWeight="500"
-        fill="#a1a1aa"
+        fill="#A1A1AA"
         letterSpacing="2.4"
       >
         <textPath href="#eng-ring">{text}</textPath>
