@@ -112,7 +112,7 @@ function CircuitTelemetryMap() {
           </div>
           <div className="circuit-stat-item">
             <span className="circuit-stat-label">Automated Tests</span>
-            <span style={{ color: '#10b981', fontWeight: 600 }}>156 suites</span>
+            <span style={{ color: '#10b981', fontWeight: 600 }}>156 test files</span>
           </div>
           <div className="circuit-stat-item">
             <span className="circuit-stat-label">Spearman Rank</span>
@@ -163,14 +163,14 @@ export default function Contact() {
                   key={c.label}
                   href={c.href}
                   target={c.href.startsWith('http') ? '_blank' : undefined}
-                  rel="noreferrer"
+                  rel={c.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                   className="channel-row"
                 >
-                  <div>
+                  <div style={{ minWidth: 0 }}>
                     <div className="mono" style={{ fontSize: 11, color: '#71717a' }}>
                       {c.label}
                     </div>
-                    <div style={{ fontSize: 15.5, fontWeight: 600, color: '#f4f4f6', marginTop: 2 }}>
+                    <div style={{ fontSize: 15.5, fontWeight: 600, color: '#f4f4f6', marginTop: 2, overflowWrap: 'anywhere' }}>
                       {c.value}
                     </div>
                   </div>
@@ -298,6 +298,22 @@ export default function Contact() {
           }
           .circuit-metrics {
             grid-template-columns: 1fr;
+          }
+        }
+        @media (max-width: 560px) {
+          .contact-directory {
+            padding: 20px;
+          }
+          .contact-tags-row {
+            grid-template-columns: 1fr;
+          }
+          .channel-row {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 10px;
+          }
+          .contact-action-btn {
+            width: 100%;
           }
         }
       `}</style>

@@ -59,7 +59,7 @@ export default function Skills() {
           padding: 24px;
           display: flex;
           flex-direction: column;
-          justify-content: space-between;
+          justify-content: flex-start;
           gap: 18px;
         }
         .skill-modules {

@@ -6,18 +6,24 @@ export default function Loader({ onDone }: { onDone: () => void }) {
   const [progress, setProgress] = useState(0)
 
   useEffect(() => {
-    const id = setInterval(() => {
-      setProgress((p) => {
-        const n = Math.min(100, p + 12 + Math.random() * 18)
-        if (n >= 100) {
-          clearInterval(id)
-          setTimeout(onDone, 220)
-        }
-        return n
-      })
-    }, 70)
-    return () => clearInterval(id)
+    // If navigating directly to an anchor hash, skip the boot delay so scrolling works immediately
+    if (window.location.hash && window.location.hash !== '#top') {
+      onDone()
+      return
+    }
+
+    const id = window.setInterval(() => {
+      setProgress((p) => Math.min(100, p + 25))
+    }, 55)
+
+    return () => window.clearInterval(id)
   }, [onDone])
+
+  useEffect(() => {
+    if (progress < 100) return
+    const timer = window.setTimeout(onDone, 140)
+    return () => window.clearTimeout(timer)
+  }, [progress, onDone])
 
   const blocks = 20
   const filled = Math.round((progress / 100) * blocks)
@@ -26,30 +32,33 @@ export default function Loader({ onDone }: { onDone: () => void }) {
     <motion.div
       key="loader"
       initial={{ opacity: 1 }}
-      exit={{ opacity: 0, transition: { duration: 0.35, ease: 'easeOut' } }}
+      exit={{ opacity: 0, transition: { duration: 0.28, ease: 'easeOut' } }}
       style={{
         position: 'fixed',
         inset: 0,
         zIndex: 1000,
         backgroundColor: '#0a0a0c',
         color: '#f4f4f6',
-        display: 'grid',
-        placeItems: 'center',
-        padding: 24,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 16,
       }}
     >
-      <div className="tech-card" style={{ width: 'min(680px, 100%)', padding: '28px 30px' }}>
+      <div className="tech-card" style={{ width: '100%', maxWidth: 640, padding: '24px 22px', overflow: 'hidden' }}>
         <div
           className="mono"
           style={{
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
+            gap: 12,
             fontSize: 12,
             color: '#a1a1aa',
-            marginBottom: 22,
+            marginBottom: 20,
             borderBottom: '1px solid rgba(255,255,255,0.08)',
-            paddingBottom: 14,
+            paddingBottom: 12,
+            flexWrap: 'wrap',
           }}
         >
           <span style={{ display: 'flex', alignItems: 'center', gap: 10, color: '#f4f4f6' }}>
@@ -60,23 +69,17 @@ export default function Loader({ onDone }: { onDone: () => void }) {
         </div>
 
         {/* Skeleton Wireframe Layout Preview */}
-        <div style={{ display: 'grid', gap: 12 }} aria-hidden>
-          <div style={{ display: 'grid', gridTemplateColumns: '1.35fr 1fr', gap: 14 }}>
-            <div style={{ display: 'grid', gap: 8 }}>
-              <div className="skeleton" style={{ height: 16, width: '40%' }} />
-              <div className="skeleton" style={{ height: 38, width: '86%' }} />
-              <div className="skeleton" style={{ height: 14, width: '92%' }} />
-              <div className="skeleton" style={{ height: 14, width: '74%' }} />
-            </div>
-            <div className="skeleton" style={{ height: 140 }} />
-          </div>
+        <div style={{ display: 'grid', gap: 10 }} aria-hidden>
+          <div className="skeleton" style={{ height: 14, width: '42%' }} />
+          <div className="skeleton" style={{ height: 32, width: '78%' }} />
+          <div className="skeleton" style={{ height: 84, width: '100%' }} />
         </div>
 
-        <div style={{ marginTop: 22 }}>
+        <div style={{ marginTop: 20 }}>
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: `repeat(${blocks}, 1fr)`,
+              gridTemplateColumns: `repeat(${blocks}, minmax(0, 1fr))`,
               gap: 3,
               padding: 3,
               borderRadius: 6,
@@ -100,12 +103,13 @@ export default function Loader({ onDone }: { onDone: () => void }) {
             style={{
               display: 'flex',
               justifyContent: 'space-between',
+              gap: 8,
               fontSize: 11,
               color: '#71717a',
               marginTop: 8,
             }}
           >
-            <span>Loading 3D models & project screenshots…</span>
+            <span>Loading 3D models &amp; project visuals…</span>
             <span style={{ color: '#f4f4f6' }}>{Math.floor(progress)}%</span>
           </div>
         </div>

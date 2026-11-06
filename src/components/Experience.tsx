@@ -203,6 +203,11 @@ export default function Experience() {
             display: none;
           }
         }
+        @media (max-width: 600px) {
+          .exp-card {
+            padding: 18px 20px;
+          }
+        }
       `}</style>
     </section>
   )

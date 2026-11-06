@@ -72,7 +72,7 @@ export default function Bonus() {
               {publication.summary}
             </p>
 
-            <a href={publication.url} target="_blank" rel="noreferrer" className="tech-btn primary">
+            <a href={publication.url} target="_blank" rel="noopener noreferrer" className="tech-btn primary">
               Read paper on AIP Publishing ↗
             </a>
           </div>
@@ -145,6 +145,15 @@ export default function Bonus() {
           }
           .lead-grid {
             grid-template-columns: 1fr;
+          }
+        }
+        @media (max-width: 600px) {
+          .pub-card {
+            padding: 20px;
+            gap: 20px;
+          }
+          .lead-card {
+            padding: 20px;
           }
         }
       `}</style>

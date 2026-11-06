@@ -12,6 +12,10 @@ function AnimatedNumber({ from, to, decimals = 3 }: { from: number; to: number; 
   const inView = useInView(ref, { once: true })
   useEffect(() => {
     if (!inView) return
+    if (typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
+      if (ref.current) ref.current.textContent = to.toFixed(decimals)
+      return
+    }
     const c = animate(from, to, {
       duration: 1.4,
       delay: 0.3,
@@ -29,7 +33,7 @@ function TelemetryBenchmark({ p, isF1 }: { p: Project; isF1: boolean }) {
   const { wireframe } = useGame()
   const [inspectSkeleton, setInspectSkeleton] = useState(false)
   const ratio = p.metric.to / p.metric.from
-  const improvement = ((1 - ratio) * 100).toFixed(1)
+  const improvement = p.metric.improvement ?? `${((1 - ratio) * 100).toFixed(1)}%`
   const showSkeleton = inspectSkeleton || wireframe
 
   return (
@@ -40,6 +44,8 @@ function TelemetryBenchmark({ p, isF1 }: { p: Project; isF1: boolean }) {
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: 8,
           fontSize: 11,
           color: '#a1a1aa',
           marginBottom: 12,
@@ -48,6 +54,7 @@ function TelemetryBenchmark({ p, isF1 }: { p: Project; isF1: boolean }) {
         <span>{p.metric.label}</span>
         <button
           type="button"
+          aria-pressed={showSkeleton}
           onClick={() => setInspectSkeleton((s) => !s)}
           className="tech-btn mono"
           style={{
@@ -114,7 +121,7 @@ function TelemetryBenchmark({ p, isF1 }: { p: Project; isF1: boolean }) {
             />
           </svg>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12, marginTop: 12 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 8, marginTop: 12 }}>
             <div>
               <div className="mono" style={{ fontSize: 10, color: '#71717a' }}>{p.metric.base}</div>
               <div className="mono" style={{ fontSize: 15, color: '#a1a1aa', fontWeight: 600, marginTop: 2 }}>
@@ -130,7 +137,7 @@ function TelemetryBenchmark({ p, isF1 }: { p: Project; isF1: boolean }) {
             <div>
               <div className="mono" style={{ fontSize: 10, color: '#71717a' }}>Error Reduction</div>
               <div className="mono" style={{ fontSize: 15, color: '#10b981', fontWeight: 700, marginTop: 2 }}>
-                −{improvement}%
+                −{improvement}
               </div>
             </div>
           </div>
@@ -165,7 +172,7 @@ function ProjectShowcase({ p, i }: { p: Project; i: number }) {
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
           <span className="chip">{p.period}</span>
-          <a href={p.url} target="_blank" rel="noreferrer" className="tech-btn primary">
+          <a href={p.url} target="_blank" rel="noopener noreferrer" className="tech-btn primary">
             {p.linkLabel} ↗
           </a>
         </div>
@@ -196,6 +203,8 @@ function ProjectShowcase({ p, i }: { p: Project; i: number }) {
                   key={activeImg.src}
                   src={activeImg.src}
                   alt={activeImg.caption}
+                  loading="lazy"
+                  decoding="async"
                   onLoad={() => setImgLoaded(true)}
                   initial={{ opacity: 0, scale: 0.99 }}
                   animate={{ opacity: 1, scale: 1 }}
@@ -218,6 +227,7 @@ function ProjectShowcase({ p, i }: { p: Project; i: number }) {
                 <button
                   key={img.src}
                   type="button"
+                  aria-pressed={idx === imgIdx}
                   onClick={() => setImgIdx(idx)}
                   className={`gallery-tab mono ${idx === imgIdx ? 'active' : ''}`}
                 >
@@ -339,6 +349,8 @@ export default function Projects() {
           opacity: 0.8;
         }
         .browser-url {
+          flex: 1;
+          min-width: 0;
           font-size: 11px;
           color: #71717a;
           background: rgba(0, 0, 0, 0.35);
@@ -418,6 +430,15 @@ export default function Projects() {
         @media (max-width: 1020px) {
           .project-main-grid {
             grid-template-columns: 1fr;
+          }
+        }
+        @media (max-width: 600px) {
+          .project-topbar {
+            padding: 18px 20px;
+          }
+          .project-main-grid {
+            padding: 20px;
+            gap: 24px;
           }
         }
       `}</style>

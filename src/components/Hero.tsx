@@ -45,16 +45,7 @@ export default function Hero() {
   }
 
   return (
-    <section
-      id="top"
-      style={{
-        position: 'relative',
-        paddingTop: 104,
-        paddingBottom: 48,
-        scrollMarginTop: 80,
-        overflow: 'hidden',
-      }}
-    >
+    <section id="top" className="hero-section">
       <div
         aria-hidden
         style={{
@@ -79,7 +70,9 @@ export default function Hero() {
             style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginBottom: 20 }}
           >
             <span className="chip emerald">
-              <span className="live-dot" /> {profile.availability}
+              <span className="live-dot" />
+              <span className="avail-full">{profile.availability}</span>
+              <span className="avail-short">Werkstudent / Internship · 20h/wk</span>
             </span>
             <span className="chip">Aachen, Germany</span>
           </motion.div>
@@ -129,7 +122,7 @@ export default function Hero() {
             <a href="#projects" className="tech-btn primary">
               Explore selected work ↓
             </a>
-            <a href="https://www.apexf1hub.com/" target="_blank" rel="noreferrer" className="tech-btn">
+            <a href="https://www.apexf1hub.com/" target="_blank" rel="noopener noreferrer" className="tech-btn">
               Visit apexf1hub.com ↗
             </a>
             <a href="#contact" className="tech-btn">
@@ -162,6 +155,7 @@ export default function Hero() {
             <button
               type="button"
               onClick={toggleWireframe}
+              aria-pressed={wireframe}
               className="tech-btn mono"
               style={{
                 background: wireframe ? 'rgba(245, 158, 11, 0.16)' : 'rgba(255,255,255,0.05)',
@@ -195,6 +189,7 @@ export default function Hero() {
                 <button
                   key={t.id}
                   type="button"
+                  aria-pressed={active}
                   onClick={() => {
                     setMode(t.id)
                     ping(256)
@@ -211,6 +206,13 @@ export default function Hero() {
       </div>
 
       <style>{`
+        .hero-section {
+          position: relative;
+          padding-top: 112px;
+          padding-bottom: 48px;
+          scroll-margin-top: 90px;
+          overflow: hidden;
+        }
         .hero-grid {
           display: grid;
           grid-template-columns: 1.1fr 0.95fr;
@@ -219,7 +221,7 @@ export default function Hero() {
         }
         .hero-title {
           font-family: var(--font-display);
-          font-size: clamp(44px, 5.6vw, 68px);
+          font-size: clamp(40px, 5.6vw, 68px);
           font-weight: 700;
           letter-spacing: -0.035em;
           line-height: 1.05;
@@ -227,7 +229,7 @@ export default function Hero() {
         }
         .hero-headline {
           font-family: var(--font-display);
-          font-size: clamp(19px, 2.1vw, 24px);
+          font-size: clamp(18px, 2.1vw, 24px);
           font-weight: 500;
           color: #d4d4d8;
           line-height: 1.38;
@@ -239,15 +241,18 @@ export default function Hero() {
           display: flex;
           flex-direction: column;
           overflow: hidden;
+          min-width: 0;
         }
         .viewport-header {
           display: flex;
           justify-content: space-between;
           align-items: center;
+          gap: 10px;
           padding: 10px 16px;
           font-size: 11.5px;
           border-bottom: 1px solid var(--border);
           background: rgba(255, 255, 255, 0.015);
+          flex-wrap: wrap;
         }
         .viewport-stage {
           position: relative;
@@ -265,6 +270,8 @@ export default function Hero() {
         .viewport-readout {
           position: absolute;
           left: 14px;
+          right: 14px;
+          max-width: fit-content;
           bottom: 14px;
           background: rgba(16, 16, 20, 0.9);
           border: 1px solid var(--border-bright);
@@ -307,11 +314,17 @@ export default function Hero() {
           font-weight: 600;
         }
         @media (max-width: 960px) {
+          .hero-section {
+            padding-top: 136px;
+            padding-bottom: 40px;
+            scroll-margin-top: 120px;
+          }
           .hero-grid {
             grid-template-columns: 1fr;
+            gap: 32px;
           }
           .viewport-stage {
-            height: 320px;
+            height: 310px;
           }
           .viewport-tabs {
             grid-template-columns: 1fr;
@@ -321,6 +334,24 @@ export default function Hero() {
             border-bottom: 1px solid var(--border);
             justify-content: flex-start;
             padding: 10px 14px;
+          }
+          .viewport-tab:last-child {
+            border-bottom: none;
+          }
+        }
+        .avail-short {
+          display: none;
+        }
+        @media (max-width: 560px) {
+          .avail-full {
+            display: none;
+          }
+          .avail-short {
+            display: inline;
+          }
+          .viewport-seal {
+            transform: scale(0.76);
+            transform-origin: top right;
           }
         }
       `}</style>

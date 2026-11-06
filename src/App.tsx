@@ -1,5 +1,3 @@
-import { AnimatePresence } from 'framer-motion'
-import { useCallback, useState } from 'react'
 import About from './components/About'
 import Bonus from './components/Bonus'
 import Contact from './components/Contact'
@@ -8,18 +6,13 @@ import Experience from './components/Experience'
 import { GameProvider } from './components/Game'
 import Hero from './components/Hero'
 import HUD from './components/HUD'
-import Loader from './components/Loader'
 import Projects from './components/Projects'
 import Skills from './components/Skills'
 
 export default function App() {
-  const [loading, setLoading] = useState(true)
-  const done = useCallback(() => setLoading(false), [])
-
   return (
     <GameProvider>
-      <AnimatePresence>{loading && <Loader onDone={done} />}</AnimatePresence>
-      {!loading && <HUD />}
+      <HUD />
       <main>
         <Hero />
         <About />

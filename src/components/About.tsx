@@ -1,40 +1,46 @@
 import { motion } from 'framer-motion'
-import { counters, education, profile, stats } from '../data'
+import { counters, education, focusAreas, profile } from '../data'
 import { CHIP_ICON, PixelArt } from './Sprites'
 import { Reveal, SectionTitle } from './UI'
 
-function CompetencyRadar() {
-  const cx = 130
-  const cy = 130
-  const rMax = 84
-  const n = stats.length
+function DomainTopology() {
+  const cx = 135
+  const cy = 104
+  const rOuter = 66
+  const rInner = 38
+  const n = focusAreas.length
 
-  const points = stats.map((s, i) => {
+  const nodes = focusAreas.map((area, i) => {
     const angle = -Math.PI / 2 + (i * 2 * Math.PI) / n
-    const r = (s.value / 100) * rMax
     return {
-      x: cx + Math.cos(angle) * r,
-      y: cy + Math.sin(angle) * r,
-      lx: cx + Math.cos(angle) * (rMax + 28),
-      ly: cy + Math.sin(angle) * (rMax + 18),
-      gx: cx + Math.cos(angle) * rMax,
-      gy: cy + Math.sin(angle) * rMax,
-      label: s.label,
-      value: s.value,
+      x: cx + Math.cos(angle) * rOuter,
+      y: cy + Math.sin(angle) * rOuter,
+      ix: cx + Math.cos(angle) * rInner,
+      iy: cy + Math.sin(angle) * rInner,
+      lx: cx + Math.cos(angle) * (rOuter + 26),
+      ly: cy + Math.sin(angle) * (rOuter + 16),
+      label: area.label,
     }
   })
 
-  const polyPoints = points.map((p) => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' ')
+  const outerPoly = nodes.map((p) => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' ')
+  const innerPoly = nodes.map((p) => `${p.ix.toFixed(1)},${p.iy.toFixed(1)}`).join(' ')
 
   return (
-    <svg viewBox="0 0 260 260" style={{ width: '100%', maxWidth: 270, margin: '0 auto', display: 'block' }}>
-      {[0.33, 0.66, 1].map((scale, idx) => (
+    <svg
+      viewBox="0 0 270 208"
+      style={{ width: '100%', maxWidth: 245, margin: '0 auto', display: 'block' }}
+      role="img"
+      aria-label="Five-domain engineering architecture map covering Data and BI, ML and RLHF, ETL and Databases, Full-Stack, and CAD and PCB"
+    >
+      {/* Concentric reference rings */}
+      {[0.35, 0.68, 1].map((scale, idx) => (
         <polygon
           key={idx}
-          points={stats
+          points={focusAreas
             .map((_, i) => {
               const a = -Math.PI / 2 + (i * 2 * Math.PI) / n
-              return `${(cx + Math.cos(a) * rMax * scale).toFixed(1)},${(cy + Math.sin(a) * rMax * scale).toFixed(1)}`
+              return `${(cx + Math.cos(a) * rOuter * scale).toFixed(1)},${(cy + Math.sin(a) * rOuter * scale).toFixed(1)}`
             })
             .join(' ')}
           fill="none"
@@ -44,34 +50,42 @@ function CompetencyRadar() {
         />
       ))}
 
-      {points.map((p, i) => (
-        <line key={i} x1={cx} y1={cy} x2={p.gx} y2={p.gy} stroke="rgba(255,255,255,0.07)" strokeWidth="1" />
+      {/* Axis spokes */}
+      {nodes.map((p, i) => (
+        <line key={i} x1={cx} y1={cy} x2={p.x} y2={p.y} stroke="rgba(255,255,255,0.08)" strokeWidth="1" />
       ))}
 
+      {/* Connected 5-domain topology */}
       <motion.polygon
-        points={polyPoints}
-        fill="rgba(225, 29, 72, 0.16)"
+        points={outerPoly}
+        fill="rgba(225, 29, 72, 0.14)"
         stroke="#f43f5e"
-        strokeWidth="2"
-        initial={{ opacity: 0, scale: 0.4 }}
+        strokeWidth="1.8"
+        initial={{ opacity: 0, scale: 0.5 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.7, ease: 'easeOut' }}
-        style={{ transformOrigin: '130px 130px' }}
+        transition={{ duration: 0.65, ease: 'easeOut' }}
+        style={{ transformOrigin: `${cx}px ${cy}px` }}
       />
 
-      {points.map((p) => (
+      <polygon points={innerPoly} fill="rgba(245, 158, 11, 0.08)" stroke="rgba(245, 158, 11, 0.45)" strokeWidth="1" />
+
+      {/* Center hub node */}
+      <rect x={cx - 4} y={cy - 4} width="8" height="8" fill="#e11d48" />
+
+      {/* Domain nodes & labels */}
+      {nodes.map((p) => (
         <g key={p.label}>
-          <rect x={p.x - 3} y={p.y - 3} width="6" height="6" fill="#f4f4f6" stroke="#e11d48" strokeWidth="1.5" />
+          <rect x={p.x - 3.5} y={p.y - 3.5} width="7" height="7" fill="#f4f4f6" stroke="#e11d48" strokeWidth="1.5" />
           <text
             x={p.lx}
             y={p.ly}
             textAnchor="middle"
             dominantBaseline="middle"
-            fill="#a1a1aa"
+            fill="#d4d4d8"
             fontFamily="'JetBrains Mono', monospace"
             fontSize="8.5"
-            fontWeight="500"
+            fontWeight="600"
           >
             {p.label}
           </text>
@@ -112,40 +126,34 @@ export default function About() {
         </div>
 
         <div className="about-grid">
-          {/* Left Column: Competency Radar */}
+          {/* Left Column: Core Focus Domains (Evidence-Backed, No Arbitrary Percentages) */}
           <Reveal className="tech-card spec-card">
-            <div className="mono" style={{ fontSize: 11, color: '#a1a1aa', marginBottom: 8, display: 'flex', justifyContent: 'space-between' }}>
-              <span>Focus Areas</span>
-              <span style={{ color: '#71717a' }}>5-Axis Profile</span>
+            <div
+              className="mono"
+              style={{
+                fontSize: 11,
+                color: '#a1a1aa',
+                marginBottom: 6,
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}
+            >
+              <span>Core Focus Areas</span>
+              <span style={{ color: '#71717a' }}>5-Domain Scope</span>
             </div>
 
-            <CompetencyRadar />
+            <DomainTopology />
 
-            <div style={{ display: 'grid', gap: 12, marginTop: 16 }}>
-              {stats.map((s, i) => (
-                <div key={s.label}>
-                  <div
-                    className="mono"
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      fontSize: 11.5,
-                      marginBottom: 5,
-                      color: '#d4d4d8',
-                    }}
-                  >
-                    <span>{s.label}</span>
-                    <span style={{ color: '#a1a1aa' }}>{s.value}%</span>
+            <div className="focus-pillar-list">
+              {focusAreas.map((area) => (
+                <div key={area.label} className="focus-pillar-item">
+                  <div className="focus-pillar-head">
+                    <span className="focus-pillar-dot" />
+                    <span className="focus-pillar-title">{area.title}</span>
                   </div>
-                  <div className="quant-track">
-                    <motion.div
-                      className="quant-fill"
-                      initial={{ width: 0 }}
-                      whileInView={{ width: `${s.value}%` }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.85, delay: 0.1 + i * 0.06, ease: 'easeOut' }}
-                    />
-                  </div>
+                  <div className="mono focus-pillar-methods">{area.focus}</div>
+                  <div className="focus-pillar-evidence">{area.evidence}</div>
                 </div>
               ))}
             </div>
@@ -153,7 +161,7 @@ export default function About() {
 
           {/* Right Column: Narrative Story & Education */}
           <div style={{ display: 'grid', gap: 24, alignContent: 'start' }}>
-            <Reveal delay={0.06} className="tech-card" style={{ padding: '28px 30px' }}>
+            <Reveal delay={0.06} className="tech-card story-card">
               <p style={{ fontSize: 17.5, color: '#f4f4f6', fontWeight: 500, lineHeight: 1.7 }}>
                 {profile.storyLead}
               </p>
@@ -168,11 +176,11 @@ export default function About() {
                   <div className="edu-badge mono">
                     <PixelArt map={CHIP_ICON} size={2} />
                   </div>
-                  <div>
+                  <div style={{ minWidth: 0 }}>
                     <a
                       href={e.url}
                       target="_blank"
-                      rel="noreferrer"
+                      rel="noopener noreferrer"
                       style={{
                         fontFamily: 'var(--font-display)',
                         fontSize: 19,
@@ -201,22 +209,54 @@ export default function About() {
       <style>{`
         .about-grid {
           display: grid;
-          grid-template-columns: 350px 1fr;
+          grid-template-columns: 370px 1fr;
           gap: 28px;
           align-items: start;
         }
         .spec-card {
-          padding: 24px;
+          padding: 22px 24px;
         }
-        .quant-track {
+        .story-card {
+          padding: 28px 30px;
+        }
+        .focus-pillar-list {
+          display: grid;
+          gap: 7px;
+          margin-top: 8px;
+        }
+        .focus-pillar-item {
+          padding: 8px 11px;
+          border-radius: 6px;
+          background: rgba(255, 255, 255, 0.025);
+          border: 1px solid var(--border);
+        }
+        .focus-pillar-head {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+        .focus-pillar-dot {
+          width: 6px;
           height: 6px;
-          border-radius: 3px;
-          background: rgba(255, 255, 255, 0.06);
-          overflow: hidden;
+          border-radius: 50%;
+          background: var(--accent-bright);
+          flex-shrink: 0;
         }
-        .quant-fill {
-          height: 100%;
-          background: linear-gradient(90deg, #e11d48, #f59e0b);
+        .focus-pillar-title {
+          font-size: 13.5px;
+          font-weight: 600;
+          color: #f4f4f6;
+        }
+        .focus-pillar-methods {
+          font-size: 11px;
+          color: #d4d4d8;
+          margin-top: 3px;
+          line-height: 1.45;
+        }
+        .focus-pillar-evidence {
+          font-size: 11.5px;
+          color: #71717a;
+          margin-top: 2px;
         }
         .counter-grid {
           display: grid;
@@ -267,6 +307,15 @@ export default function About() {
         @media (max-width: 560px) {
           .counter-grid {
             grid-template-columns: 1fr;
+          }
+          .story-card {
+            padding: 20px;
+          }
+          .spec-card {
+            padding: 18px;
+          }
+          .edu-card {
+            padding: 18px;
           }
         }
       `}</style>

@@ -15,12 +15,37 @@ export const profile = {
     'Over the last two years in industry, I led a four-person engineering team building internal analytics tools, ran more than 50 rounds of RLHF model evaluation to raise Large Action Model precision from 10% to 50%, and built Apex F1 Hub from the ground up. Today I am based in Aachen pursuing my M.Sc. in Data Analytics and Decision Science at RWTH Aachen University.',
 }
 
-export const stats = [
-  { label: 'Data & BI', value: 94 },
-  { label: 'ML & RLHF', value: 90 },
-  { label: 'ETL & DB', value: 92 },
-  { label: 'Full-Stack', value: 84 },
-  { label: 'CAD & PCB', value: 86 },
+export const focusAreas = [
+  {
+    label: 'Data & BI',
+    title: 'Data Analytics & BI',
+    focus: 'EDA · KPI Dashboards · Statistical Analysis',
+    evidence: 'RWTH M.Sc. · 40% efficiency gain at Softage AI',
+  },
+  {
+    label: 'ML & RLHF',
+    title: 'Machine Learning & Evaluation',
+    focus: 'Time-Series (LSTM / GRU) · Monte Carlo · RLHF',
+    evidence: '50+ RLHF evaluation rounds · AIP 2025 paper',
+  },
+  {
+    label: 'ETL & DB',
+    title: 'Data Engineering & Databases',
+    focus: 'PostgreSQL · Supabase · Apache Kafka · Elasticsearch',
+    evidence: '15-min automated ETL · 50% feed relevance lift',
+  },
+  {
+    label: 'Full-Stack',
+    title: 'Full-Stack Data Products',
+    focus: 'Next.js · TypeScript · REST APIs · Playwright CI',
+    evidence: 'Apex F1 Hub live · 156 automated test files',
+  },
+  {
+    label: 'CAD & PCB',
+    title: 'Programmatic CAD & PCB',
+    focus: 'Python (build123d, SKiDL) · KiCad · B.Tech. EE',
+    evidence: '183 automated PCB & 3D CAD designs delivered',
+  },
 ]
 
 export const counters = [
@@ -68,22 +93,22 @@ export const experience: Job[] = [
     context:
       'Worked inside a 7-member engineering squad on the Vinivia platform, building data-driven user analytics and media views.',
     points: [
-      'Built 10+ data-driven frontend components covering user analytics, order history, channels, and playlists.',
-      'Integrated real-time data flows across 5+ production REST APIs while keeping state updates fast and predictable.',
+      'Developed 10+ data-driven frontend components covering user analytics, order history, channels, and playlists with a 7-member team.',
+      'Integrated real-time data flows through 5+ production REST APIs for the Vinivia project.',
     ],
-    tags: ['React', 'TypeScript', 'REST APIs', 'User Analytics'],
+    tags: ['REST APIs', 'TypeScript', 'JavaScript', 'User Analytics'],
   },
   {
-    company: 'Behere Elite Technologies',
+    company: 'Behere Elite Technologies Private Limited',
     role: 'Product Engineering Intern',
     place: 'New Delhi, India',
     period: 'Jan 2023 – Apr 2023',
     level: '03',
     context:
-      'Paired product KPI analysis with backend data streaming to improve feed relevance and release velocity.',
+      'Paired quantitative market analysis and product KPI management with real-time backend data streaming.',
     points: [
-      'Built a real-time data pipeline with Apache Kafka and Elasticsearch that improved user recommendation feed relevance by 50%.',
-      'Conducted quantitative market analysis and managed product KPIs from ideation to release, improving operational efficiency by 20%.',
+      'Increased operational efficiency by 20% by conducting quantitative market analysis and managing product KPIs from ideation to release.',
+      'Improved user recommendation feed relevance by 50% through a real-time data pipeline using Apache Kafka and Elasticsearch.',
     ],
     tags: ['Apache Kafka', 'Elasticsearch', 'Product KPIs', 'Market Analysis'],
   },
@@ -153,7 +178,7 @@ export const projects = [
           'Python and GitHub Actions workflows sync Jolpica, OpenF1, and FastF1 APIs every 15 minutes, backed by data-consistency audits, Sentry alerts, and Playwright end-to-end CI checks.',
       },
     ],
-    metric: { from: 3.595, to: 2.872, label: 'Pole Position MAE (175-round backtest)', base: 'Baseline' },
+    metric: { from: 3.595, to: 2.872, improvement: '20%', label: 'Pole Position MAE (175-round backtest)', base: 'Baseline' },
   },
   {
     name: 'Short-Term Wind Power Forecasting',
@@ -161,7 +186,7 @@ export const projects = [
     period: 'Jun 2023 – May 2024',
     url: 'https://github.com/adi-alt/Short-Term-Wind-Power-Forecasting',
     linkLabel: 'View GitHub Repo',
-    stack: ['Python', 'TensorFlow / Keras', 'GRU · LSTM · BiLSTM', 'scikit-learn', 'Simulink Power Curve', 'Rolling-Origin CV'],
+    stack: ['Python', 'TensorFlow / Keras', 'LSTM / GRU / BiLSTM', 'scikit-learn', 'Random Forest', 'pandas & NumPy', 'Rolling-Origin CV'],
     images: [
       {
         src: '/projects/wind-predictions.png',
@@ -180,17 +205,17 @@ export const projects = [
       },
     ] as ProjectImage[],
     story:
-      'Using 52,560 hourly meteorological records (26,280 per site across Lakshadweep and Karnataka) and a modelled fleet of 20 Unison U50 (750 kW) turbines, this project benchmarks six recurrent neural network variants across LSTM, GRU, and BiLSTM architectures.',
+      'Conducted exploratory data analysis and time-series modelling on 52,560 hourly records (26,280 per site across 2 sites in Lakshadweep and Karnataka), benchmarking 6 deep-learning model variants across LSTM, GRU, and BiLSTM architectures.',
     engineeringHighlights: [
       {
-        title: 'GRU outperformed LSTM by up to 9.7% in test MSE',
+        title: 'Test MSE of 0.1556 (3.8% below LSTM) and 0.1309 (9.7% below LSTM)',
         detail:
-          'Evaluated robustness with 5-fold rolling-origin cross-validation (Lakshadweep GRU MSE 0.263 ± 0.083) and grid-search tuning, achieving test MSE values of 0.1556 (3.8% below LSTM) and 0.1309 (9.7% below LSTM).',
+          'Evaluated robustness with 5-fold rolling-origin cross-validation (Lakshadweep GRU MSE 0.263 ± 0.083) and grid-search tuning, reducing test MSE from 0.1618 to 0.1556 (Lakshadweep) and from 0.1449 to 0.1309 (Karnataka).',
       },
       {
         title: 'Environmental driver attribution',
         detail:
-          'Applied correlation analysis and Random Forest feature importance across wind speed, wind direction, temperature, humidity, and surface pressure to confirm wind speed as the primary power driver.',
+          'Assessed variable impact using correlation analysis and Random Forest feature importance across meteorological variables, identifying wind speed as the primary driver of power output.',
       },
       {
         title: 'Published in AIP Conference Proceedings',
@@ -198,7 +223,7 @@ export const projects = [
           'Published the comparative findings in AIP Conference Proceedings (2025) and packaged the training, tuning, and evaluation workflow into a reusable open-source Python pipeline.',
       },
     ],
-    metric: { from: 0.145, to: 0.1309, label: 'Test MSE (Karnataka Fleet)', base: 'LSTM Baseline' },
+    metric: { from: 0.1449, to: 0.1309, improvement: '9.7%', label: 'Test MSE · Karnataka (vs. LSTM)', base: 'LSTM Baseline' },
   },
 ]
 
@@ -272,7 +297,7 @@ export const publication = {
   authors: 'A. Verma, P. Aggarwal, A. Yadav, A. Kumar',
   venue: 'AIP Conference Proceedings 3297(1), Article 090030 · AIP Publishing, 2025 (ICOTET)',
   summary:
-    'Comparative study evaluating LSTM, GRU, and BiLSTM architectures across 52,560 hourly records from two Indian sites, showing that gated recurrent units achieve lower test error and tight cross-validation stability.',
+    'Comparative study evaluating LSTM, GRU, and BiLSTM architectures across 52,560 hourly records from two Indian sites (Lakshadweep and Karnataka), achieving test MSE values of 0.1556 (3.8% below LSTM) and 0.1309 (9.7% below LSTM) alongside 5-fold rolling-origin cross-validation.',
   url: 'https://pubs.aip.org/aip/acp/article-abstract/3297/1/090030/3369776/Wind-power-forecasting-using-deep-learning-models',
 }
 

@@ -1,7 +1,24 @@
-import { useLayoutEffect, useMemo, useRef, useState } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
-import { Float, Line } from '@react-three/drei'
-import * as THREE from 'three'
+import { useEffect, useRef, useState } from 'react'
+import {
+  AmbientLight,
+  BoxGeometry,
+  BufferGeometry,
+  CatmullRomCurve3,
+  DirectionalLight,
+  Group,
+  InstancedMesh,
+  Line,
+  LineBasicMaterial,
+  LineDashedMaterial,
+  MathUtils,
+  Matrix4,
+  MeshStandardMaterial,
+  Object3D,
+  PerspectiveCamera,
+  Scene,
+  Vector3,
+  WebGLRenderer,
+} from 'three'
 
 // Crisp low-DPR pass upscaled with nearest-neighbour for tactile voxel/CAD aesthetic
 const PIXEL_DPR = 0.55
@@ -10,65 +27,61 @@ export type SceneMode = 'f1' | 'turbine' | 'pcb'
 
 type Voxel = { x: number; y: number; z: number; color: string }
 
-function VoxelCluster({
-  voxels,
-  unit = 0.14,
-  wireframe = false,
-}: {
-  voxels: Voxel[]
-  unit?: number
-  wireframe?: boolean
-}) {
-  const byColor = useMemo(() => {
-    const map: Record<string, THREE.Vector3[]> = {}
-    voxels.forEach((v) => {
-      ;(map[v.color] ||= []).push(new THREE.Vector3(v.x * unit, v.y * unit, v.z * unit))
-    })
-    return Object.entries(map)
-  }, [voxels, unit])
+function buildVoxelGroup(
+  voxels: Voxel[],
+  unit: number,
+  wireframe: boolean,
+  materialsOut: MeshStandardMaterial[],
+  geometriesOut: BufferGeometry[],
+): Group {
+  const group = new Group()
+  const byColor: Record<string, Vector3[]> = {}
+  for (const v of voxels) {
+    ;(byColor[v.color] ||= []).push(new Vector3(v.x * unit, v.y * unit, v.z * unit))
+  }
 
-  return (
-    <group>
-      {byColor.map(([color, pts]) => (
-        <InstancedVoxels key={color} color={color} points={pts} size={unit} wireframe={wireframe} />
-      ))}
-    </group>
-  )
+  const geom = new BoxGeometry(unit * 0.94, unit * 0.94, unit * 0.94)
+  geometriesOut.push(geom)
+  const mat4 = new Matrix4()
+
+  for (const [color, pts] of Object.entries(byColor)) {
+    const mat = new MeshStandardMaterial({
+      color: wireframe ? '#f43f5e' : color,
+      roughness: 0.35,
+      metalness: 0.45,
+      flatShading: true,
+      wireframe,
+    })
+    materialsOut.push(mat)
+    const mesh = new InstancedMesh(geom, mat, pts.length)
+    mesh.userData.baseColor = color
+    for (let i = 0; i < pts.length; i++) {
+      mat4.makeTranslation(pts[i].x, pts[i].y, pts[i].z)
+      mesh.setMatrixAt(i, mat4)
+    }
+    mesh.instanceMatrix.needsUpdate = true
+    group.add(mesh)
+  }
+
+  return group
 }
 
-function InstancedVoxels({
-  color,
-  points,
-  size,
-  wireframe,
-}: {
-  color: string
-  points: THREE.Vector3[]
-  size: number
-  wireframe: boolean
-}) {
-  const ref = useRef<THREE.InstancedMesh>(null!)
-  useLayoutEffect(() => {
-    const m = new THREE.Matrix4()
-    points.forEach((p, i) => {
-      m.makeTranslation(p.x, p.y, p.z)
-      ref.current.setMatrixAt(i, m)
-    })
-    ref.current.instanceMatrix.needsUpdate = true
-  }, [points])
-
-  return (
-    <instancedMesh ref={ref} args={[undefined, undefined, points.length]}>
-      <boxGeometry args={[size * 0.94, size * 0.94, size * 0.94]} />
-      <meshStandardMaterial
-        color={wireframe ? '#f43f5e' : color}
-        roughness={0.35}
-        metalness={0.45}
-        flatShading
-        wireframe={wireframe}
-      />
-    </instancedMesh>
-  )
+function createCurveLine(
+  points: Vector3[],
+  color: string,
+  dashed: boolean,
+  geometriesOut: BufferGeometry[],
+  materialsOut: (LineBasicMaterial | LineDashedMaterial)[],
+): Line {
+  const geometry = new BufferGeometry().setFromPoints(points)
+  geometriesOut.push(geometry)
+  const material = dashed
+    ? new LineDashedMaterial({ color, dashSize: 0.15, gapSize: 0.09 })
+    : new LineBasicMaterial({ color })
+  materialsOut.push(material)
+  const line = new Line(geometry, material)
+  if (dashed) line.computeLineDistances()
+  return line
 }
 
 /* ------------------------------------------------------------------ */
@@ -128,57 +141,6 @@ function buildF1Voxels(): Voxel[] {
   return out
 }
 
-function F1CarModel({ wireframe }: { wireframe: boolean }) {
-  const voxels = useMemo(() => buildF1Voxels(), [])
-  const ref = useRef<THREE.Group>(null!)
-  useFrame((state, dt) => {
-    ref.current.rotation.y += dt * 0.45
-    ref.current.position.y = Math.sin(state.clock.elapsedTime * 2) * 0.08
-  })
-
-  // Aerodynamic CFD flow curves over the chassis
-  const aeroTop = useMemo(
-    () =>
-      new THREE.CatmullRomCurve3([
-        new THREE.Vector3(-2.3, -0.1, 0),
-        new THREE.Vector3(-1.2, 0.25, 0),
-        new THREE.Vector3(0.1, 0.58, 0),
-        new THREE.Vector3(1.4, 0.72, 0),
-        new THREE.Vector3(2.3, 0.9, 0),
-      ]).getPoints(32),
-    [],
-  )
-  const aeroLeft = useMemo(
-    () =>
-      new THREE.CatmullRomCurve3([
-        new THREE.Vector3(-2.2, -0.15, 0.85),
-        new THREE.Vector3(-0.7, 0.08, 0.95),
-        new THREE.Vector3(0.8, 0.18, 0.75),
-        new THREE.Vector3(2.1, 0.55, 0.65),
-      ]).getPoints(28),
-    [],
-  )
-  const aeroRight = useMemo(
-    () =>
-      new THREE.CatmullRomCurve3([
-        new THREE.Vector3(-2.2, -0.15, -0.85),
-        new THREE.Vector3(-0.7, 0.08, -0.95),
-        new THREE.Vector3(0.8, 0.18, -0.75),
-        new THREE.Vector3(2.1, 0.55, -0.65),
-      ]).getPoints(28),
-    [],
-  )
-
-  return (
-    <group ref={ref} rotation={[0.18, -0.65, 0]}>
-      <VoxelCluster voxels={voxels} unit={0.145} wireframe={wireframe} />
-      <Line points={aeroTop} color="#00f0ff" lineWidth={1.6} dashed dashSize={0.15} gapSize={0.08} />
-      <Line points={aeroLeft} color="#ff2a54" lineWidth={1.3} />
-      <Line points={aeroRight} color="#ff2a54" lineWidth={1.3} />
-    </group>
-  )
-}
-
 /* ------------------------------------------------------------------ */
 /* 2. Real-Life Voxel Wind Turbine + Wind Forecast Curves             */
 /* ------------------------------------------------------------------ */
@@ -216,31 +178,6 @@ function buildSingleBlade(): Voxel[] {
     if (y < 9) out.push({ x: 1, y, z: 0, color: '#cbd5e1' })
   }
   return out
-}
-
-function WindTurbineModel({ wireframe }: { wireframe: boolean }) {
-  const tower = useMemo(() => buildTurbineTower(), [])
-  const blade = useMemo(() => buildSingleBlade(), [])
-  const groupRef = useRef<THREE.Group>(null!)
-  const rotorRef = useRef<THREE.Group>(null!)
-
-  useFrame((_, dt) => {
-    groupRef.current.rotation.y += dt * 0.35
-    rotorRef.current.rotation.x += dt * 2.2
-  })
-
-  return (
-    <group ref={groupRef} position={[0, -0.2, 0]} rotation={[0.1, -0.6, 0]}>
-      <VoxelCluster voxels={tower} unit={0.14} wireframe={wireframe} />
-      <group ref={rotorRef} position={[-0.42, 0.98, 0]}>
-        {[0, (Math.PI * 2) / 3, (Math.PI * 4) / 3].map((ang, i) => (
-          <group key={i} rotation={[ang, 0, 0]}>
-            <VoxelCluster voxels={blade} unit={0.13} wireframe={wireframe} />
-          </group>
-        ))}
-      </group>
-    </group>
-  )
 }
 
 /* ------------------------------------------------------------------ */
@@ -285,46 +222,323 @@ function buildPCBVoxels(): Voxel[] {
   return out
 }
 
-function PCBModel({ wireframe }: { wireframe: boolean }) {
-  const voxels = useMemo(() => buildPCBVoxels(), [])
-  const ref = useRef<THREE.Group>(null!)
-  useFrame((_, dt) => {
-    ref.current.rotation.y += dt * 0.45
-  })
-  return (
-    <group ref={ref} rotation={[0.45, 0.5, 0]}>
-      <VoxelCluster voxels={voxels} unit={0.15} wireframe={wireframe} />
-    </group>
-  )
-}
+const F1_VOXELS = buildF1Voxels()
+const TURBINE_TOWER = buildTurbineTower()
+const TURBINE_BLADE = buildSingleBlade()
+const PCB_VOXELS = buildPCBVoxels()
 
-/* ------------------------------------------------------------------ */
-/* Interactive Telemetry Rig + CAD Reference Grid                     */
-/* ------------------------------------------------------------------ */
-function Rig({ children }: { children: React.ReactNode }) {
-  const ref = useRef<THREE.Group>(null!)
-  useFrame((state) => {
-    ref.current.rotation.y = THREE.MathUtils.lerp(ref.current.rotation.y, state.pointer.x * 0.4, 0.06)
-    ref.current.rotation.x = THREE.MathUtils.lerp(ref.current.rotation.x, -state.pointer.y * 0.22, 0.06)
-  })
-  return <group ref={ref}>{children}</group>
-}
+function VoxelCanvas({
+  mode,
+  wireframe,
+  cameraPos,
+  showRing,
+  onCycle,
+}: {
+  mode: SceneMode
+  wireframe: boolean
+  cameraPos: [number, number, number]
+  showRing: boolean
+  onCycle?: () => void
+}) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [hovered, setHovered] = useState(false)
+  const wireframeRef = useRef(wireframe)
+  wireframeRef.current = wireframe
 
-function TelemetryRing() {
-  const ref = useRef<THREE.Group>(null!)
-  useFrame((_, dt) => (ref.current.rotation.y -= dt * 0.25))
-  const pts = useMemo(() => {
-    const arr: THREE.Vector3[] = []
-    for (let i = 0; i <= 64; i++) {
-      const a = (i / 64) * Math.PI * 2
-      arr.push(new THREE.Vector3(Math.cos(a) * 2.35, -1.25, Math.sin(a) * 2.35))
+  const applyWireframeRef = useRef<((wf: boolean) => void) | null>(null)
+  const renderOnceRef = useRef<(() => void) | null>(null)
+
+  useEffect(() => {
+    const container = containerRef.current
+    if (!container) return
+
+    const scene = new Scene()
+    const camera = new PerspectiveCamera(40, 1, 0.1, 100)
+    camera.position.set(cameraPos[0], cameraPos[1], cameraPos[2])
+    camera.lookAt(0, 0, 0)
+
+    const renderer = new WebGLRenderer({
+      antialias: false,
+      alpha: true,
+      powerPreference: 'high-performance',
+    })
+    renderer.setPixelRatio(PIXEL_DPR)
+    renderer.domElement.style.width = '100%'
+    renderer.domElement.style.height = '100%'
+    renderer.domElement.style.display = 'block'
+    renderer.domElement.style.imageRendering = 'pixelated'
+    container.innerHTML = ''
+    container.appendChild(renderer.domElement)
+
+    // Lighting matching the original scene
+    const ambient = new AmbientLight('#ffffff', 1.18)
+    const dirMain = new DirectionalLight('#ffffff', 2.2)
+    dirMain.position.set(4, 6, 5)
+    const dirCyan = new DirectionalLight('#00f0ff', 0.9)
+    dirCyan.position.set(-5, -2, -3)
+    const dirRed = new DirectionalLight('#ff2a54', 0.5)
+    dirRed.position.set(0, -4, 2)
+    scene.add(ambient, dirMain, dirCyan, dirRed)
+
+    const geometries: BufferGeometry[] = []
+    const voxelMaterials: MeshStandardMaterial[] = []
+    const lineMaterials: (LineBasicMaterial | LineDashedMaterial)[] = []
+
+    const rig = new Group()
+    const floatGroup = new Group()
+    rig.add(floatGroup)
+    scene.add(rig)
+
+    let modelGroup = new Group()
+    let rotorGroup: Group | null = null
+
+    if (mode === 'f1') {
+      modelGroup.rotation.set(0.18, -0.65, 0)
+      modelGroup.add(buildVoxelGroup(F1_VOXELS, 0.145, wireframeRef.current, voxelMaterials, geometries))
+
+      const aeroTop = new CatmullRomCurve3([
+        new Vector3(-2.3, -0.1, 0),
+        new Vector3(-1.2, 0.25, 0),
+        new Vector3(0.1, 0.58, 0),
+        new Vector3(1.4, 0.72, 0),
+        new Vector3(2.3, 0.9, 0),
+      ]).getPoints(32)
+      const aeroLeft = new CatmullRomCurve3([
+        new Vector3(-2.2, -0.15, 0.85),
+        new Vector3(-0.7, 0.08, 0.95),
+        new Vector3(0.8, 0.18, 0.75),
+        new Vector3(2.1, 0.55, 0.65),
+      ]).getPoints(28)
+      const aeroRight = new CatmullRomCurve3([
+        new Vector3(-2.2, -0.15, -0.85),
+        new Vector3(-0.7, 0.08, -0.95),
+        new Vector3(0.8, 0.18, -0.75),
+        new Vector3(2.1, 0.55, -0.65),
+      ]).getPoints(28)
+
+      modelGroup.add(
+        createCurveLine(aeroTop, '#00f0ff', true, geometries, lineMaterials),
+        createCurveLine(aeroLeft, '#ff2a54', false, geometries, lineMaterials),
+        createCurveLine(aeroRight, '#ff2a54', false, geometries, lineMaterials),
+      )
+    } else if (mode === 'turbine') {
+      modelGroup.position.set(0, -0.2, 0)
+      modelGroup.rotation.set(0.1, -0.6, 0)
+      modelGroup.add(buildVoxelGroup(TURBINE_TOWER, 0.14, wireframeRef.current, voxelMaterials, geometries))
+
+      rotorGroup = new Group()
+      rotorGroup.position.set(-0.42, 0.98, 0)
+      for (const ang of [0, (Math.PI * 2) / 3, (Math.PI * 4) / 3]) {
+        const arm = new Group()
+        arm.rotation.set(ang, 0, 0)
+        arm.add(buildVoxelGroup(TURBINE_BLADE, 0.13, wireframeRef.current, voxelMaterials, geometries))
+        rotorGroup.add(arm)
+      }
+      modelGroup.add(rotorGroup)
+    } else {
+      modelGroup.rotation.set(0.45, 0.5, 0)
+      modelGroup.add(buildVoxelGroup(PCB_VOXELS, 0.15, wireframeRef.current, voxelMaterials, geometries))
     }
-    return arr
-  }, [])
+
+    floatGroup.add(modelGroup)
+
+    let ringGroup: Group | null = null
+    if (showRing) {
+      ringGroup = new Group()
+      const pts: Vector3[] = []
+      for (let i = 0; i <= 64; i++) {
+        const a = (i / 64) * Math.PI * 2
+        pts.push(new Vector3(Math.cos(a) * 2.35, -1.25, Math.sin(a) * 2.35))
+      }
+      ringGroup.add(createCurveLine(pts, '#1e293b', true, geometries, lineMaterials))
+      rig.add(ringGroup)
+    }
+
+    // Wireframe updater without rebuilding scene
+    applyWireframeRef.current = (wf: boolean) => {
+      modelGroup.traverse((obj: Object3D) => {
+        if ((obj as InstancedMesh).isInstancedMesh) {
+          const mesh = obj as InstancedMesh
+          const mat = mesh.material as MeshStandardMaterial
+          mat.wireframe = wf
+          mat.color.set(wf ? '#f43f5e' : (mesh.userData.baseColor as string))
+          mat.needsUpdate = true
+        }
+      })
+    }
+
+    // Pointer parallax state
+    const pointer = { x: 0, y: 0 }
+    const onPointerMove = (e: PointerEvent) => {
+      const rect = container.getBoundingClientRect()
+      if (rect.width > 0 && rect.height > 0) {
+        pointer.x = ((e.clientX - rect.left) / rect.width) * 2 - 1
+        pointer.y = -(((e.clientY - rect.top) / rect.height) * 2 - 1)
+      }
+    }
+    container.addEventListener('pointermove', onPointerMove, { passive: true })
+
+    // Sizing
+    const updateSize = () => {
+      const w = Math.max(1, container.clientWidth)
+      const h = Math.max(1, container.clientHeight)
+      camera.aspect = w / h
+      camera.updateProjectionMatrix()
+      renderer.setSize(w, h, false)
+      renderer.render(scene, camera)
+    }
+    updateSize()
+
+    const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(updateSize) : null
+    ro?.observe(container)
+
+    const hasIO = typeof IntersectionObserver !== 'undefined'
+    let inView = !hasIO
+    let reducedMotion =
+      typeof window !== 'undefined' &&
+      window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+    let rafId = 0
+    let lastTime = performance.now()
+    let elapsed = 0
+
+    const renderOnce = () => {
+      renderer.render(scene, camera)
+    }
+    renderOnceRef.current = renderOnce
+
+    const tick = (now: number) => {
+      rafId = 0
+      if (!inView || reducedMotion) return
+
+      const dt = Math.min((now - lastTime) / 1000, 0.05)
+      lastTime = now
+      elapsed += dt
+
+      // Model rotation & float
+      if (mode === 'f1') {
+        modelGroup.rotation.y += dt * 0.45
+        modelGroup.position.y = Math.sin(elapsed * 2) * 0.08
+      } else if (mode === 'turbine') {
+        modelGroup.rotation.y += dt * 0.35
+        if (rotorGroup) rotorGroup.rotation.x += dt * 2.2
+      } else {
+        modelGroup.rotation.y += dt * 0.45
+      }
+
+      floatGroup.position.y = Math.sin(elapsed * 1.8) * 0.05
+      if (ringGroup) ringGroup.rotation.y -= dt * 0.25
+
+      rig.rotation.y = MathUtils.lerp(rig.rotation.y, pointer.x * 0.4, 0.06)
+      rig.rotation.x = MathUtils.lerp(rig.rotation.x, -pointer.y * 0.22, 0.06)
+
+      renderer.render(scene, camera)
+      rafId = requestAnimationFrame(tick)
+    }
+
+    const startLoop = () => {
+      if (rafId === 0 && inView && !reducedMotion) {
+        lastTime = performance.now()
+        rafId = requestAnimationFrame(tick)
+      }
+    }
+
+    const stopLoop = () => {
+      if (rafId !== 0) {
+        cancelAnimationFrame(rafId)
+        rafId = 0
+      }
+    }
+
+    // Render initial static frame immediately
+    renderOnce()
+
+    // IntersectionObserver starts continuous animation only when visible; fallback starts immediately if IO is unsupported
+    const io = hasIO
+      ? new IntersectionObserver(
+          ([entry]) => {
+            inView = entry.isIntersecting
+            if (inView) {
+              renderOnce()
+              startLoop()
+            } else {
+              stopLoop()
+            }
+          },
+          { rootMargin: '60px 0px', threshold: 0.01 },
+        )
+      : null
+
+    if (io) {
+      io.observe(container)
+    } else {
+      startLoop()
+    }
+
+    const mq =
+      typeof window !== 'undefined' && window.matchMedia
+        ? window.matchMedia('(prefers-reduced-motion: reduce)')
+        : null
+    const onMotionChange = (e: MediaQueryListEvent) => {
+      reducedMotion = e.matches
+      if (reducedMotion) {
+        stopLoop()
+        renderOnce()
+      } else {
+        startLoop()
+      }
+    }
+    mq?.addEventListener('change', onMotionChange)
+
+    return () => {
+      stopLoop()
+      io?.disconnect()
+      ro?.disconnect()
+      mq?.removeEventListener('change', onMotionChange)
+      container.removeEventListener('pointermove', onPointerMove)
+      geometries.forEach((g) => g.dispose())
+      voxelMaterials.forEach((m) => m.dispose())
+      lineMaterials.forEach((m) => m.dispose())
+      renderer.dispose()
+    }
+  }, [mode, cameraPos[0], cameraPos[1], cameraPos[2], showRing])
+
+  useEffect(() => {
+    applyWireframeRef.current?.(wireframe)
+    renderOnceRef.current?.()
+  }, [wireframe])
+
   return (
-    <group ref={ref}>
-      <Line points={pts} color="#1e293b" lineWidth={1.2} dashed dashSize={0.14} gapSize={0.1} />
-    </group>
+    <div
+      ref={containerRef}
+      onClick={onCycle}
+      onPointerOver={() => setHovered(true)}
+      onPointerOut={() => setHovered(false)}
+      role={onCycle ? 'button' : 'img'}
+      tabIndex={onCycle ? 0 : undefined}
+      aria-label={
+        onCycle
+          ? `Interactive 3D ${mode.toUpperCase()} model. Click or press Enter to cycle models.`
+          : `3D ${mode.toUpperCase()} model preview`
+      }
+      onKeyDown={
+        onCycle
+          ? (e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault()
+                onCycle()
+              }
+            }
+          : undefined
+      }
+      style={{
+        width: '100%',
+        height: '100%',
+        cursor: onCycle ? (hovered ? 'pointer' : 'grab') : 'default',
+        outlineOffset: -2,
+      }}
+    />
   )
 }
 
@@ -337,30 +551,14 @@ export default function HeroScene({
   wireframe?: boolean
   onCycle?: () => void
 }) {
-  const [hovered, setHovered] = useState(false)
   return (
-    <Canvas
-      dpr={PIXEL_DPR}
-      camera={{ position: [0, 1.1, 5.4], fov: 40 }}
-      gl={{ antialias: false, alpha: true }}
-      style={{ imageRendering: 'pixelated', cursor: hovered ? 'pointer' : 'grab' }}
-      onClick={onCycle}
-      onPointerOver={() => setHovered(true)}
-      onPointerOut={() => setHovered(false)}
-    >
-      <ambientLight intensity={1.15} />
-      <directionalLight position={[4, 6, 5]} intensity={2.2} color="#ffffff" />
-      <directionalLight position={[-5, -2, -3]} intensity={0.9} color="#00f0ff" />
-      <directionalLight position={[0, -4, 2]} intensity={0.5} color="#ff2a54" />
-      <Rig>
-        <Float speed={1.8} rotationIntensity={0.12} floatIntensity={0.35}>
-          {mode === 'f1' && <F1CarModel wireframe={wireframe} />}
-          {mode === 'turbine' && <WindTurbineModel wireframe={wireframe} />}
-          {mode === 'pcb' && <PCBModel wireframe={wireframe} />}
-        </Float>
-        <TelemetryRing />
-      </Rig>
-    </Canvas>
+    <VoxelCanvas
+      mode={mode}
+      wireframe={wireframe}
+      cameraPos={[0, 1.1, 5.4]}
+      showRing
+      onCycle={onCycle}
+    />
   )
 }
 
@@ -373,20 +571,11 @@ export function MiniVoxel({
   wireframe?: boolean
 }) {
   return (
-    <Canvas
-      dpr={PIXEL_DPR}
-      camera={{ position: [0, 0.35, 6.1], fov: 40 }}
-      gl={{ antialias: false, alpha: true }}
-      style={{ imageRendering: 'pixelated' }}
-    >
-      <ambientLight intensity={1.2} />
-      <directionalLight position={[3, 5, 4]} intensity={2} />
-      <directionalLight position={[-3, -2, 2]} intensity={0.8} color="#00f0ff" />
-      <Float speed={2} floatIntensity={0.4} rotationIntensity={0.2}>
-        {mode === 'pcb' && <PCBModel wireframe={wireframe} />}
-        {mode === 'turbine' && <WindTurbineModel wireframe={wireframe} />}
-        {mode === 'f1' && <F1CarModel wireframe={wireframe} />}
-      </Float>
-    </Canvas>
+    <VoxelCanvas
+      mode={mode}
+      wireframe={wireframe}
+      cameraPos={[0, 0.35, 6.1]}
+      showRing={false}
+    />
   )
 }
