@@ -124,26 +124,64 @@ function TelemetryBenchmark({ p, isF1 }: { p: Project; isF1: boolean }) {
             />
           </svg>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 8, marginTop: 12 }}>
-            <div>
-              <div className="mono" style={{ fontSize: 10, color: '#A1A1AA' }}>{p.metric.base}</div>
-              <div className="mono" style={{ fontSize: 15, color: '#A1A1AA', fontWeight: 600, marginTop: 2 }}>
-                {p.metric.from}
+          {'sites' in p.metric && p.metric.sites ? (
+            <div style={{ display: 'grid', gap: 10, marginTop: 12 }}>
+              {p.metric.sites.map((site) => (
+                <div
+                  key={site.name}
+                  style={{
+                    paddingTop: 8,
+                    borderTop: '1px solid #27272A',
+                  }}
+                >
+                  <div className="mono" style={{ fontSize: 10.5, color: '#F4F4F5', fontWeight: 600, marginBottom: 6 }}>
+                    {site.name}
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 8 }}>
+                    <div>
+                      <div className="mono" style={{ fontSize: 10, color: '#A1A1AA' }}>{site.base}</div>
+                      <div className="mono" style={{ fontSize: 14.5, color: '#A1A1AA', fontWeight: 600, marginTop: 2 }}>
+                        {site.from}
+                      </div>
+                    </div>
+                    <div>
+                      <div className="mono" style={{ fontSize: 10, color: '#A1A1AA' }}>My Model</div>
+                      <div className="mono" style={{ fontSize: 14.5, color: '#F4F4F5', fontWeight: 700, marginTop: 2 }}>
+                        <AnimatedNumber from={site.from} to={site.to} decimals={4} />
+                      </div>
+                    </div>
+                    <div>
+                      <div className="mono" style={{ fontSize: 10, color: '#A1A1AA' }}>Error Reduction</div>
+                      <div className="mono" style={{ fontSize: 14.5, color: '#E11D48', fontWeight: 700, marginTop: 2 }}>
+                        −{site.improvement}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 8, marginTop: 12 }}>
+              <div>
+                <div className="mono" style={{ fontSize: 10, color: '#A1A1AA' }}>{p.metric.base}</div>
+                <div className="mono" style={{ fontSize: 15, color: '#A1A1AA', fontWeight: 600, marginTop: 2 }}>
+                  {p.metric.from}
+                </div>
+              </div>
+              <div>
+                <div className="mono" style={{ fontSize: 10, color: '#A1A1AA' }}>My Model</div>
+                <div className="mono" style={{ fontSize: 15, color: '#F4F4F5', fontWeight: 700, marginTop: 2 }}>
+                  <AnimatedNumber from={p.metric.from} to={p.metric.to} decimals={p.metric.to < 1 ? 4 : 3} />
+                </div>
+              </div>
+              <div>
+                <div className="mono" style={{ fontSize: 10, color: '#A1A1AA' }}>Error Reduction</div>
+                <div className="mono" style={{ fontSize: 15, color: '#E11D48', fontWeight: 700, marginTop: 2 }}>
+                  −{improvement}
+                </div>
               </div>
             </div>
-            <div>
-              <div className="mono" style={{ fontSize: 10, color: '#A1A1AA' }}>My Model</div>
-              <div className="mono" style={{ fontSize: 15, color: '#F4F4F5', fontWeight: 700, marginTop: 2 }}>
-                <AnimatedNumber from={p.metric.from} to={p.metric.to} decimals={p.metric.to < 1 ? 4 : 3} />
-              </div>
-            </div>
-            <div>
-              <div className="mono" style={{ fontSize: 10, color: '#A1A1AA' }}>Error Reduction</div>
-              <div className="mono" style={{ fontSize: 15, color: '#E11D48', fontWeight: 700, marginTop: 2 }}>
-                −{improvement}
-              </div>
-            </div>
-          </div>
+          )}
         </div>
       )}
     </div>
@@ -323,7 +361,14 @@ export default function Projects() {
           grid-template-columns: 1.15fr 1fr;
           gap: 32px;
           padding: 28px;
-          align-items: start;
+          align-items: stretch;
+        }
+        .project-gallery,
+        .project-narrative {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          min-width: 0;
         }
         .browser-frame {
           border-radius: 8px;

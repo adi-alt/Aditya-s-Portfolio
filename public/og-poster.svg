@@ -1,164 +1,148 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <defs>
-    <radialGradient id="glowRed" cx="78%" cy="32%" r="48%">
-      <stop offset="0%" stop-color="#e11d48" stop-opacity="0.22"/>
-      <stop offset="55%" stop-color="#f59e0b" stop-opacity="0.06"/>
-      <stop offset="100%" stop-color="#0a0a0c" stop-opacity="0"/>
-    </radialGradient>
-    <linearGradient id="topBar" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#e11d48"/>
-      <stop offset="55%" stop-color="#f59e0b"/>
-      <stop offset="100%" stop-color="#10b981"/>
-    </linearGradient>
-    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#16161d"/>
-      <stop offset="100%" stop-color="#101015"/>
-    </linearGradient>
     <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ffffff" stroke-opacity="0.025" stroke-width="1"/>
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#27272A" stroke-opacity="0.35" stroke-width="1"/>
     </pattern>
   </defs>
 
-  <!-- Carbon Background -->
-  <rect width="1200" height="630" fill="#0a0a0c"/>
+  <!-- Near-Black Background (#0B0B0D) -->
+  <rect width="1200" height="630" fill="#0B0B0D"/>
   <rect width="1200" height="630" fill="url(#grid)"/>
-  <rect width="1200" height="630" fill="url(#glowRed)"/>
 
-  <!-- Top Telemetry Accent Bar -->
-  <rect x="0" y="0" width="1200" height="5" fill="url(#topBar)"/>
+  <!-- Top Subtle Motorsport Red Accent Line (2px) -->
+  <rect x="0" y="0" width="1200" height="2" fill="#E11D48"/>
 
   <!-- Left Editorial Content -->
   <!-- Status Chips (Rounded Rectangles rx="6" height="36") -->
   <g transform="translate(72, 68)">
-    <rect x="0" y="0" width="372" height="36" rx="6" fill="#10b981" fill-opacity="0.12" stroke="#10b981" stroke-opacity="0.4"/>
-    <circle cx="18" cy="18" r="4.5" fill="#10b981"/>
-    <text x="32" y="23" fill="#6ee7b7" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, monospace" font-size="13" font-weight="600">
+    <rect x="0" y="0" width="372" height="36" rx="6" fill="#151519" stroke="#27272A" stroke-width="1"/>
+    <circle cx="18" cy="18" r="4" fill="#E11D48"/>
+    <text x="32" y="23" fill="#F4F4F5" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, monospace" font-size="13" font-weight="500">
       Open for Werkstudent / Internship (20h/wk)
     </text>
 
-    <rect x="384" y="0" width="154" height="36" rx="6" fill="#ffffff" fill-opacity="0.04" stroke="#ffffff" stroke-opacity="0.15"/>
-    <text x="461" y="23" text-anchor="middle" fill="#d4d4d8" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, monospace" font-size="13" font-weight="500">
+    <rect x="384" y="0" width="154" height="36" rx="6" fill="#151519" stroke="#27272A" stroke-width="1"/>
+    <text x="461" y="23" text-anchor="middle" fill="#A1A1AA" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, monospace" font-size="13" font-weight="500">
       Aachen, Germany
     </text>
   </g>
 
   <!-- Name & Headline -->
-  <text x="72" y="182" fill="#f4f4f6" font-family="'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="68" font-weight="700" letter-spacing="-2">
+  <text x="72" y="182" fill="#F4F4F5" font-family="'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="68" font-weight="700" letter-spacing="-2">
     Aditya Verma
   </text>
 
-  <text x="72" y="232" fill="#e4e4e7" font-family="'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="24" font-weight="500">
+  <text x="72" y="232" fill="#F4F4F5" font-family="'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="24" font-weight="500">
     Building reliable data platforms, forecasting models,
   </text>
-  <text x="72" y="264" fill="#e4e4e7" font-family="'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="24" font-weight="500">
+  <text x="72" y="264" fill="#F4F4F5" font-family="'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="24" font-weight="500">
     and analytics products.
   </text>
 
-  <text x="72" y="314" fill="#a1a1aa" font-family="'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="17" font-weight="400">
+  <text x="72" y="314" fill="#A1A1AA" font-family="'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="17" font-weight="400">
     M.Sc. in Data Analytics &amp; Decision Science at RWTH Aachen University
   </text>
-  <text x="72" y="340" fill="#a1a1aa" font-family="'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="17" font-weight="400">
+  <text x="72" y="340" fill="#A1A1AA" font-family="'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="17" font-weight="400">
     2+ years in AI evaluation, automated ETL pipelines &amp; full-stack analytics
   </text>
 
   <!-- Key Metric Cards (Bottom Left) -->
   <g transform="translate(72, 384)">
-    <rect x="0" y="0" width="204" height="96" rx="8" fill="url(#cardGrad)" stroke="#ffffff" stroke-opacity="0.12"/>
-    <text x="20" y="38" fill="#f4f4f6" font-family="'JetBrains Mono', Menlo, monospace" font-size="26" font-weight="700">2+ yrs</text>
-    <text x="20" y="62" fill="#d4d4d8" font-family="'Inter', sans-serif" font-size="13" font-weight="600">Industry Experience</text>
-    <text x="20" y="80" fill="#71717a" font-family="'Inter', sans-serif" font-size="11.5">AI Evaluation, ETL &amp; BI</text>
+    <rect x="0" y="0" width="204" height="96" rx="8" fill="#151519" stroke="#27272A" stroke-width="1"/>
+    <text x="20" y="38" fill="#F4F4F5" font-family="'JetBrains Mono', Menlo, monospace" font-size="26" font-weight="700">2+ yrs</text>
+    <text x="20" y="62" fill="#F4F4F5" font-family="'Inter', sans-serif" font-size="13" font-weight="600">Industry Experience</text>
+    <text x="20" y="80" fill="#A1A1AA" font-family="'Inter', sans-serif" font-size="11.5">AI Evaluation, ETL &amp; BI</text>
 
-    <rect x="220" y="0" width="204" height="96" rx="8" fill="url(#cardGrad)" stroke="#ffffff" stroke-opacity="0.12"/>
-    <text x="240" y="38" fill="#10b981" font-family="'JetBrains Mono', Menlo, monospace" font-size="26" font-weight="700">10% → 50%</text>
-    <text x="240" y="62" fill="#d4d4d8" font-family="'Inter', sans-serif" font-size="13" font-weight="600">Autopilot Precision</text>
-    <text x="240" y="80" fill="#71717a" font-family="'Inter', sans-serif" font-size="11.5">50+ RLHF Evaluation Rounds</text>
+    <rect x="220" y="0" width="204" height="96" rx="8" fill="#151519" stroke="#27272A" stroke-width="1"/>
+    <text x="240" y="38" fill="#F4F4F5" font-family="'JetBrains Mono', Menlo, monospace" font-size="26" font-weight="700">10% → 50%</text>
+    <text x="240" y="62" fill="#F4F4F5" font-family="'Inter', sans-serif" font-size="13" font-weight="600">Autopilot Precision</text>
+    <text x="240" y="80" fill="#A1A1AA" font-family="'Inter', sans-serif" font-size="11.5">50+ RLHF Evaluation Rounds</text>
 
-    <rect x="440" y="0" width="204" height="96" rx="8" fill="url(#cardGrad)" stroke="#ffffff" stroke-opacity="0.12"/>
-    <text x="460" y="38" fill="#f43f5e" font-family="'JetBrains Mono', Menlo, monospace" font-size="26" font-weight="700">−20% MAE</text>
-    <text x="460" y="62" fill="#d4d4d8" font-family="'Inter', sans-serif" font-size="13" font-weight="600">Apex F1 Hub Live</text>
-    <text x="460" y="80" fill="#71717a" font-family="'Inter', sans-serif" font-size="11.5">175-Round F1 Backtest</text>
+    <rect x="440" y="0" width="204" height="96" rx="8" fill="#151519" stroke="#27272A" stroke-width="1"/>
+    <text x="460" y="38" fill="#E11D48" font-family="'JetBrains Mono', Menlo, monospace" font-size="26" font-weight="700">−20% MAE</text>
+    <text x="460" y="62" fill="#F4F4F5" font-family="'Inter', sans-serif" font-size="13" font-weight="600">Apex F1 Hub Live</text>
+    <text x="460" y="80" fill="#A1A1AA" font-family="'Inter', sans-serif" font-size="11.5">175-Round F1 Backtest</text>
   </g>
 
-  <!-- Bottom Skill Tags Row (rx="6", height="36") -->
+  <!-- Bottom Skill Tags Row (rx="6", height="36", Consistent Motorsport Red Pin) -->
   <g transform="translate(72, 514)">
-    <rect x="0" y="0" width="90" height="36" rx="6" fill="#ffffff" fill-opacity="0.04" stroke="#ffffff" stroke-opacity="0.15"/>
-    <circle cx="18" cy="18" r="3" fill="#e11d48"/>
-    <text x="30" y="22.5" fill="#e4e4e7" font-family="'JetBrains Mono', Menlo, monospace" font-size="12.5" font-weight="500">Python</text>
+    <rect x="0" y="0" width="90" height="36" rx="6" fill="#151519" stroke="#27272A" stroke-width="1"/>
+    <circle cx="18" cy="18" r="3" fill="#E11D48"/>
+    <text x="30" y="22.5" fill="#F4F4F5" font-family="'JetBrains Mono', Menlo, monospace" font-size="12.5" font-weight="500">Python</text>
 
-    <rect x="100" y="0" width="118" height="36" rx="6" fill="#ffffff" fill-opacity="0.04" stroke="#ffffff" stroke-opacity="0.15"/>
-    <circle cx="118" cy="18" r="3" fill="#f59e0b"/>
-    <text x="130" y="22.5" fill="#e4e4e7" font-family="'JetBrains Mono', Menlo, monospace" font-size="12.5" font-weight="500">TypeScript</text>
+    <rect x="100" y="0" width="118" height="36" rx="6" fill="#151519" stroke="#27272A" stroke-width="1"/>
+    <circle cx="118" cy="18" r="3" fill="#E11D48"/>
+    <text x="130" y="22.5" fill="#F4F4F5" font-family="'JetBrains Mono', Menlo, monospace" font-size="12.5" font-weight="500">TypeScript</text>
 
-    <rect x="228" y="0" width="118" height="36" rx="6" fill="#ffffff" fill-opacity="0.04" stroke="#ffffff" stroke-opacity="0.15"/>
-    <circle cx="246" cy="18" r="3" fill="#10b981"/>
-    <text x="258" y="22.5" fill="#e4e4e7" font-family="'JetBrains Mono', Menlo, monospace" font-size="12.5" font-weight="500">PostgreSQL</text>
+    <rect x="228" y="0" width="118" height="36" rx="6" fill="#151519" stroke="#27272A" stroke-width="1"/>
+    <circle cx="246" cy="18" r="3" fill="#E11D48"/>
+    <text x="258" y="22.5" fill="#F4F4F5" font-family="'JetBrains Mono', Menlo, monospace" font-size="12.5" font-weight="500">PostgreSQL</text>
 
-    <rect x="356" y="0" width="154" height="36" rx="6" fill="#ffffff" fill-opacity="0.04" stroke="#ffffff" stroke-opacity="0.15"/>
-    <circle cx="374" cy="18" r="3" fill="#38bdf8"/>
-    <text x="386" y="22.5" fill="#e4e4e7" font-family="'JetBrains Mono', Menlo, monospace" font-size="12.5" font-weight="500">PyTorch &amp; RLHF</text>
+    <rect x="356" y="0" width="154" height="36" rx="6" fill="#151519" stroke="#27272A" stroke-width="1"/>
+    <circle cx="374" cy="18" r="3" fill="#E11D48"/>
+    <text x="386" y="22.5" fill="#F4F4F5" font-family="'JetBrains Mono', Menlo, monospace" font-size="12.5" font-weight="500">PyTorch &amp; RLHF</text>
 
-    <rect x="520" y="0" width="136" height="36" rx="6" fill="#ffffff" fill-opacity="0.04" stroke="#ffffff" stroke-opacity="0.15"/>
-    <circle cx="538" cy="18" r="3" fill="#a855f7"/>
-    <text x="550" y="22.5" fill="#e4e4e7" font-family="'JetBrains Mono', Menlo, monospace" font-size="12.5" font-weight="500">Next.js &amp; BI</text>
+    <rect x="520" y="0" width="136" height="36" rx="6" fill="#151519" stroke="#27272A" stroke-width="1"/>
+    <circle cx="538" cy="18" r="3" fill="#E11D48"/>
+    <text x="550" y="22.5" fill="#F4F4F5" font-family="'JetBrains Mono', Menlo, monospace" font-size="12.5" font-weight="500">Next.js &amp; SQL</text>
   </g>
 
-  <!-- Right Telemetry Viewport Card -->
+  <!-- Right Telemetry Viewport Card (#151519 surface, #27272A border) -->
   <g transform="translate(756, 68)">
-    <rect x="0" y="0" width="372" height="482" rx="10" fill="url(#cardGrad)" stroke="#ffffff" stroke-opacity="0.16"/>
+    <rect x="0" y="0" width="372" height="482" rx="10" fill="#151519" stroke="#27272A" stroke-width="1"/>
     <!-- Card Header -->
-    <rect x="0" y="0" width="372" height="44" rx="10" fill="#ffffff" fill-opacity="0.02"/>
-    <line x1="0" y1="44" x2="372" y2="44" stroke="#ffffff" stroke-opacity="0.08"/>
-    <circle cx="22" cy="22" r="4" fill="#e11d48"/>
-    <text x="36" y="26" fill="#e4e4e7" font-family="'JetBrains Mono', Menlo, monospace" font-size="12" font-weight="600">
+    <line x1="0" y1="44" x2="372" y2="44" stroke="#27272A" stroke-width="1"/>
+    <circle cx="22" cy="22" r="4" fill="#E11D48"/>
+    <text x="36" y="26" fill="#F4F4F5" font-family="'JetBrains Mono', Menlo, monospace" font-size="12" font-weight="600">
       3D Telemetry · Apex F1 &amp; Wind
     </text>
-    <text x="350" y="26" text-anchor="end" fill="#10b981" font-family="'JetBrains Mono', Menlo, monospace" font-size="11.5" font-weight="600">
+    <text x="350" y="26" text-anchor="end" fill="#06B6D4" font-family="'JetBrains Mono', Menlo, monospace" font-size="11.5" font-weight="600">
       ● Live
     </text>
 
     <!-- Pixel Art Voxel F1 Telemetry Car Illustration (Centered in Viewport) -->
     <g transform="translate(114, 78) scale(9)" shape-rendering="crispEdges">
-      <rect x="6" y="0" width="4" height="1" fill="#f4f4f6"/>
-      <rect x="4" y="1" width="8" height="1" fill="#e11d48"/>
-      <rect x="1" y="2" width="3" height="3" fill="#27272a"/>
-      <rect x="12" y="2" width="3" height="3" fill="#27272a"/>
-      <rect x="5" y="2" width="6" height="3" fill="#e11d48"/>
-      <rect x="6" y="4" width="4" height="3" fill="#be123c"/>
-      <rect x="7" y="5" width="2" height="2" fill="#f59e0b"/>
-      <rect x="3" y="6" width="10" height="4" fill="#e11d48"/>
-      <rect x="5" y="7" width="6" height="3" fill="#be123c"/>
-      <rect x="1" y="10" width="3" height="3" fill="#27272a"/>
-      <rect x="12" y="10" width="3" height="3" fill="#27272a"/>
-      <rect x="5" y="10" width="6" height="2" fill="#e11d48"/>
-      <rect x="3" y="12" width="10" height="2" fill="#38bdf8"/>
+      <rect x="6" y="0" width="4" height="1" fill="#F4F4F5"/>
+      <rect x="4" y="1" width="8" height="1" fill="#E11D48"/>
+      <rect x="1" y="2" width="3" height="3" fill="#27272A"/>
+      <rect x="12" y="2" width="3" height="3" fill="#27272A"/>
+      <rect x="5" y="2" width="6" height="3" fill="#E11D48"/>
+      <rect x="6" y="4" width="4" height="3" fill="#9F1239"/>
+      <rect x="7" y="5" width="2" height="2" fill="#06B6D4"/>
+      <rect x="3" y="6" width="10" height="4" fill="#E11D48"/>
+      <rect x="5" y="7" width="6" height="3" fill="#9F1239"/>
+      <rect x="1" y="10" width="3" height="3" fill="#27272A"/>
+      <rect x="12" y="10" width="3" height="3" fill="#27272A"/>
+      <rect x="5" y="10" width="6" height="2" fill="#E11D48"/>
+      <rect x="3" y="12" width="10" height="2" fill="#06B6D4"/>
     </g>
 
     <!-- Aero Telemetry Spline Curve Overlay -->
     <g transform="translate(24, 248)">
-      <rect x="0" y="0" width="324" height="114" rx="8" fill="#0b0b0f" stroke="#ffffff" stroke-opacity="0.08"/>
-      <text x="14" y="22" fill="#a1a1aa" font-family="'JetBrains Mono', Menlo, monospace" font-size="10.5">
+      <rect x="0" y="0" width="324" height="114" rx="8" fill="#0B0B0D" stroke="#27272A" stroke-width="1"/>
+      <text x="14" y="22" fill="#A1A1AA" font-family="'JetBrains Mono', Menlo, monospace" font-size="10.5">
         Telemetry Forecasting Benchmark
       </text>
-      <text x="310" y="22" text-anchor="end" fill="#10b981" font-family="'JetBrains Mono', Menlo, monospace" font-size="10.5" font-weight="700">
+      <text x="310" y="22" text-anchor="end" fill="#E11D48" font-family="'JetBrains Mono', Menlo, monospace" font-size="10.5" font-weight="700">
         Spearman 0.762
       </text>
       <!-- Baseline Dashed Curve -->
-      <path d="M 16 54 C 75 38, 125 68, 180 46 C 235 30, 275 62, 308 42" fill="none" stroke="#71717a" stroke-width="1.8" stroke-dasharray="4 4"/>
+      <path d="M 16 54 C 75 38, 125 68, 180 46 C 235 30, 275 62, 308 42" fill="none" stroke="#A1A1AA" stroke-opacity="0.45" stroke-width="1.8" stroke-dasharray="4 4"/>
       <!-- Model Solid Curve -->
-      <path d="M 16 86 C 75 72, 125 94, 180 78 C 235 66, 275 88, 308 74" fill="none" stroke="#e11d48" stroke-width="2.8"/>
-      <circle cx="180" cy="78" r="4" fill="#f59e0b"/>
-      <circle cx="308" cy="74" r="4" fill="#10b981"/>
+      <path d="M 16 86 C 75 72, 125 94, 180 78 C 235 66, 275 88, 308 74" fill="none" stroke="#E11D48" stroke-width="2.8"/>
+      <circle cx="180" cy="78" r="4" fill="#E11D48"/>
+      <circle cx="308" cy="74" r="4" fill="#06B6D4"/>
     </g>
 
     <!-- Bottom Readout Rows inside Card -->
     <g transform="translate(24, 380)">
-      <rect x="0" y="0" width="324" height="38" rx="6" fill="#ffffff" fill-opacity="0.03" stroke="#ffffff" stroke-opacity="0.08"/>
-      <text x="14" y="24" fill="#a1a1aa" font-family="'JetBrains Mono', Menlo, monospace" font-size="11.5">apexf1hub.com</text>
-      <text x="310" y="24" text-anchor="end" fill="#f4f4f6" font-family="'JetBrains Mono', Menlo, monospace" font-size="11.5" font-weight="600">1.7 s Groq Latency</text>
+      <rect x="0" y="0" width="324" height="38" rx="6" fill="#0B0B0D" stroke="#27272A" stroke-width="1"/>
+      <text x="14" y="24" fill="#A1A1AA" font-family="'JetBrains Mono', Menlo, monospace" font-size="11.5">apexf1hub.com</text>
+      <text x="310" y="24" text-anchor="end" fill="#F4F4F5" font-family="'JetBrains Mono', Menlo, monospace" font-size="11.5" font-weight="600">1.7 s Groq Latency</text>
 
-      <rect x="0" y="46" width="324" height="38" rx="6" fill="#ffffff" fill-opacity="0.03" stroke="#ffffff" stroke-opacity="0.08"/>
-      <text x="14" y="70" fill="#a1a1aa" font-family="'JetBrains Mono', Menlo, monospace" font-size="11.5">AIP Proceedings 2025</text>
-      <text x="310" y="70" text-anchor="end" fill="#10b981" font-family="'JetBrains Mono', Menlo, monospace" font-size="11.5" font-weight="600">MSE 0.1309 (−9.7%)</text>
+      <rect x="0" y="46" width="324" height="38" rx="6" fill="#0B0B0D" stroke="#27272A" stroke-width="1"/>
+      <text x="14" y="70" fill="#A1A1AA" font-family="'JetBrains Mono', Menlo, monospace" font-size="11.5">2-Site Wind (AIP 2025)</text>
+      <text x="310" y="70" text-anchor="end" fill="#06B6D4" font-family="'JetBrains Mono', Menlo, monospace" font-size="11.5" font-weight="600">MSE 0.1309 &amp; 0.1556</text>
     </g>
   </g>
 </svg>

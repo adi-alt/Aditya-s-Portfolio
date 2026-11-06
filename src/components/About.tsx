@@ -160,7 +160,7 @@ export default function About() {
           </Reveal>
 
           {/* Right Column: Narrative Story & Education */}
-          <div style={{ display: 'grid', gap: 24, alignContent: 'start' }}>
+          <div className="about-right-col">
             <Reveal delay={0.06} className="tech-card story-card">
               <p style={{ fontSize: 17.5, color: '#F4F4F5', fontWeight: 500, lineHeight: 1.7 }}>
                 {profile.storyLead}
@@ -170,7 +170,7 @@ export default function About() {
               </p>
             </Reveal>
 
-            <div style={{ display: 'grid', gap: 14 }}>
+            <div className="edu-stack">
               {education.map((e, i) => (
                 <Reveal key={e.school} delay={0.08 * i} className="tech-card edu-card">
                   <div className="edu-badge mono">
@@ -211,13 +211,32 @@ export default function About() {
           display: grid;
           grid-template-columns: 370px 1fr;
           gap: 28px;
-          align-items: start;
+          align-items: stretch;
         }
         .spec-card {
           padding: 22px 24px;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
+        .about-right-col {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          gap: 18px;
+          height: 100%;
         }
         .story-card {
           padding: 28px 30px;
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
+        .edu-stack {
+          display: grid;
+          gap: 14px;
         }
         .focus-pillar-list {
           display: grid;

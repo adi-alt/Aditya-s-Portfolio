@@ -182,7 +182,7 @@ export const projects = [
   },
   {
     name: 'Short-Term Wind Power Forecasting',
-    subtitle: 'Deep Learning Comparative Study (LSTM, GRU & BiLSTM) Published in AIP',
+    subtitle: 'Deep Learning Study Across 2 Sites (Karnataka & Lakshadweep) · Published in AIP',
     period: 'Jun 2023 – May 2024',
     url: 'https://github.com/adi-alt/Short-Term-Wind-Power-Forecasting',
     linkLabel: 'View GitHub Repo',
@@ -190,32 +190,42 @@ export const projects = [
     images: [
       {
         src: '/projects/wind-predictions.png',
-        label: 'Forecast vs. Actual Output',
-        caption: 'GRU, BiLSTM, and LSTM hourly power predictions (kW) plotted against actual fleet output over 1,000 test hours.',
+        label: 'Lakshadweep Forecast',
+        caption: 'Lakshadweep site (26,280 hrs) GRU, BiLSTM, and LSTM hourly power predictions (kW) vs. actual output (Test MSE 0.1556, −3.8% vs. LSTM).',
+      },
+      {
+        src: '/projects/wind-predictions-karnataka.png',
+        label: 'Karnataka Forecast',
+        caption: 'Karnataka site (26,280 hrs) GRU, BiLSTM, and LSTM hourly power predictions (kW) vs. actual output (Test MSE 0.1309, −9.7% vs. LSTM).',
       },
       {
         src: '/projects/wind-rose.png',
         label: 'Lakshadweep Wind Rose',
-        caption: 'Directional wind-speed distribution (m/s) showing the dominant monsoon regimes that drive turbine output.',
+        caption: 'Directional wind-speed distribution (m/s) in Lakshadweep showing the dominant monsoon regimes that drive turbine output.',
+      },
+      {
+        src: '/projects/wind-rose-karnataka.png',
+        label: 'Karnataka Wind Rose',
+        caption: 'Directional wind-speed distribution (m/s) in Karnataka across the 26,280-hour meteorological record.',
       },
       {
         src: '/projects/wind-forecasting-repo.png',
-        label: 'Reusable Pipeline Repo',
-        caption: 'Modular Python pipeline shared across both Indian wind farm sites for training, tuning, and cross-validation.',
+        label: '2-Site Pipeline Repo',
+        caption: 'Modular Python pipeline shared across both Indian wind farm sites (Lakshadweep and Karnataka) for training, tuning, and cross-validation.',
       },
     ] as ProjectImage[],
     story:
-      'Conducted exploratory data analysis and time-series modelling on 52,560 hourly records (26,280 per site across 2 sites in Lakshadweep and Karnataka), benchmarking 6 deep-learning model variants across LSTM, GRU, and BiLSTM architectures.',
+      'Conducted exploratory data analysis (EDA) and time-series modelling on 52,560 hourly records (26,280 each from Lakshadweep and Karnataka), benchmarking 6 model variants across LSTM, GRU, and BiLSTM architectures.',
     engineeringHighlights: [
       {
-        title: 'Test MSE of 0.1556 (3.8% below LSTM) and 0.1309 (9.7% below LSTM)',
+        title: 'Test MSE of 0.1556 in Lakshadweep (−3.8%) and 0.1309 in Karnataka (−9.7%)',
         detail:
-          'Evaluated robustness with 5-fold rolling-origin cross-validation (Lakshadweep GRU MSE 0.263 ± 0.083) and grid-search tuning, reducing test MSE from 0.1618 to 0.1556 (Lakshadweep) and from 0.1449 to 0.1309 (Karnataka).',
+          'Evaluated robustness with 5-fold rolling-origin cross-validation (Lakshadweep GRU MSE 0.263 ± 0.083) and grid-search tuning, reducing test MSE from 0.1618 to 0.1556 in Lakshadweep (3.8% below LSTM) and from 0.1449 to 0.1309 in Karnataka (9.7% below LSTM).',
       },
       {
-        title: 'Environmental driver attribution',
+        title: 'Environmental driver attribution across both locations',
         detail:
-          'Assessed variable impact using correlation analysis and Random Forest feature importance across meteorological variables, identifying wind speed as the primary driver of power output.',
+          'Assessed variable impact using correlation analysis and Random Forest feature importance across meteorological variables at both sites, identifying wind speed as the primary driver of power output.',
       },
       {
         title: 'Published in AIP Conference Proceedings',
@@ -223,7 +233,17 @@ export const projects = [
           'Published the comparative findings in AIP Conference Proceedings (2025) and packaged the training, tuning, and evaluation workflow into a reusable open-source Python pipeline.',
       },
     ],
-    metric: { from: 0.1449, to: 0.1309, improvement: '9.7%', label: 'Test MSE · Karnataka (vs. LSTM)', base: 'LSTM Baseline' },
+    metric: {
+      from: 0.1449,
+      to: 0.1309,
+      improvement: '9.7%',
+      label: 'Test MSE · 2 Sites (Karnataka & Lakshadweep vs. LSTM)',
+      base: 'LSTM Baseline',
+      sites: [
+        { name: 'Karnataka (26,280 hrs)', base: 'LSTM Baseline', from: 0.1449, to: 0.1309, improvement: '9.7%' },
+        { name: 'Lakshadweep (26,280 hrs)', base: 'LSTM Baseline', from: 0.1618, to: 0.1556, improvement: '3.8%' },
+      ],
+    },
   },
 ]
 

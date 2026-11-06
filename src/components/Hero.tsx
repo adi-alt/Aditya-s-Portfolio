@@ -20,8 +20,8 @@ const MODEL_TABS: { id: SceneMode; label: string; metric: string; sub: string; i
   {
     id: 'turbine',
     label: 'Wind Power Forecast',
-    metric: 'Test MSE 0.1309 (−9.7% vs LSTM)',
-    sub: '52,560 hourly records · Published in AIP Proceedings',
+    metric: 'MSE 0.1309 (−9.7%) & 0.1556 (−3.8%)',
+    sub: '52,560 hrs across 2 sites · Karnataka & Lakshadweep',
     icon: TURBINE_ICON,
   },
   {
